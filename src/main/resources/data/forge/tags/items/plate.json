@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "techresourcescrystal:water_plate",
+    "techresourcescrystal:air_plate",
+    "techresourcescrystal:fire_plate",
+    "techresourcescrystal:earth_plate"
+  ]
+}

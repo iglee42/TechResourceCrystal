@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:bone"
+  },
+  "result": {
+    "item": "minecraft:skeleton_spawn_egg"
+  }
+}

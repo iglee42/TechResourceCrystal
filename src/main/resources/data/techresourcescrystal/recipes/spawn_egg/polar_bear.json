@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:polar_bear_hide"
+  },
+  "result": {
+    "item": "minecraft:polar_bear_spawn_egg"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EAI",
+    " C ",
+    "EWI"
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcescrystal:fire_plate"
+    },
+    "E": {
+      "item": "techresourcescrystal:earth_plate"
+    },
+    "W": {
+      "item": "techresourcescrystal:water_plate"
+    },
+    "A": {
+      "item": "techresourcescrystal:air_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:minerals_mold"
+    }
+  },
+  "result": {
+    "item": "minecraft:netherite_scrap",
+    "count": 4
+  }
+}

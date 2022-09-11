@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench and by iglee42",
+	"textures": {
+		"0": "techresourcescrystal:block/crystaliser/tank_empty",
+		"particle": "techresourcescrystal:block/crystaliser/tank_empty"
+	},
+	"elements": [
+		{
+			"name": "tank",
+			"from": [6, 3, 11],
+			"to": [10, 8, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 9, 13], "texture": "#0"},
+				"east": {"uv": [0, 0, 9, 13], "texture": "#0"},
+				"south": {"uv": [0, 0, 9, 13], "texture": "#0"},
+				"west": {"uv": [0, 0, 9, 13], "texture": "#0"},
+				"up": {"uv": [16, 9, 9, 0], "texture": "#0"},
+				"down": {"uv": [16, 0, 9, 9], "texture": "#0"}
+			}
+		}
+	]
+}

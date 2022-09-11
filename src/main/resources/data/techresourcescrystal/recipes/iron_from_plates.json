@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I",
+    "C",
+    "W"
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcescrystal:fire_plate"
+    },
+    "W": {
+      "item": "techresourcescrystal:water_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:minerals_mold"
+    }
+  },
+  "result": {
+    "item": "minecraft:raw_iron",
+    "count": 16
+  }
+}

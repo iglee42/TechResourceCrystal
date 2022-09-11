@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:cat_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:cocoa_beans"
+  },
+  "result": {
+    "item": "minecraft:ocelot_spawn_egg"
+  }
+}

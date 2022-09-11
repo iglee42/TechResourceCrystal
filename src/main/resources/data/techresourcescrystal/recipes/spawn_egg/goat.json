@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:goat_horn"
+  },
+  "result": {
+    "item": "minecraft:goat_spawn_egg"
+  }
+}

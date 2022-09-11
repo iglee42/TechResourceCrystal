@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "techresourcescrystal:water_crystal",
+    "techresourcescrystal:air_crystal",
+    "techresourcescrystal:fire_crystal",
+    "techresourcescrystal:earth_crystal"
+  ]
+}

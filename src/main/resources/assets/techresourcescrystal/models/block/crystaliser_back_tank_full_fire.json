@@ -1,0 +1,6 @@
+{
+  "parent" : "techresourcescrystal:block/crystaliser_back_tank_full",
+  "textures" : {
+    "0" : "techresourcescrystal:block/crystaliser/tank_full_fire"
+  }
+}

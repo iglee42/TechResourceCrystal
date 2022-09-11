@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:cod"
+  },
+  "result": {
+    "item": "minecraft:cod_spawn_egg"
+  }
+}

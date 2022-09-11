@@ -1,0 +1,22 @@
+﻿{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SPS",
+        "PLP",
+        "SPS"
+    ],
+    "key":{
+        "S":{
+            "item": "minecraft:end_stone"
+        },
+        "P":{
+            "item": "minecraft:ender_pearl"
+        },
+        "L":{
+            "item": "techresourcesbase:modium_ingot"
+        }
+    },
+    "result":{
+        "item": "techresourcescrystal:capture_stone"
+    }
+}

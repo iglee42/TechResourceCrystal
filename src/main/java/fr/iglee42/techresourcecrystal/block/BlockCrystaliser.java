@@ -1,0 +1,258 @@
+package fr.iglee42.techresourcecrystal.block;
+
+import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
+import fr.iglee42.techresourcecrystal.init.ModBlock;
+import fr.iglee42.techresourcecrystal.init.ModItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class BlockCrystaliser extends Block{
+
+    public static final BooleanProperty RIGHT =  BooleanProperty.create("right");
+    public static final BooleanProperty LEFT =  BooleanProperty.create("left");
+    public static final BooleanProperty WATER =  BooleanProperty.create("water");
+    public static final BooleanProperty AIR =  BooleanProperty.create("air");
+    public static final BooleanProperty FIRE =  BooleanProperty.create("fire");
+    public static final BooleanProperty EARTH =  BooleanProperty.create("earth");
+    public static final BooleanProperty MOLD =  BooleanProperty.create("mold");
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+
+    public Timer timer;
+
+    public BlockCrystaliser() {
+        super(Properties.of(Material.HEAVY_METAL).noOcclusion());
+        this.registerDefaultState(this.defaultBlockState().setValue(MOLD,false).setValue(RIGHT,false).setValue(LEFT,false).setValue(WATER,false).setValue(AIR,false).setValue(FIRE,false).setValue(EARTH,false));
+    }
+
+
+    @Override
+    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
+        List<ItemStack> drop = new ArrayList<>();
+        drop.add(new ItemStack(this));
+        if (p_60537_.getValue(MOLD)) drop.add(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
+        return drop;
+    }
+
+    @Override
+    public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_){
+        if (p_225533_4_.getMainHandItem().getItem() != Items.AIR){
+            if (p_225533_4_.getMainHandItem().getItem() == ModItem.CRYSTALISER_MOLD.get()){
+                if (!p_225533_1_.getValue(MOLD)){
+                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(MOLD, true),0);
+                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+                    return InteractionResult.CONSUME;
+                }
+            } else if (p_225533_4_.getMainHandItem().getItem() == Items.LAVA_BUCKET){
+                if (!p_225533_1_.getValue(LEFT)){
+                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(LEFT, true),0);
+                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+                    if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.BUCKET));
+                    return InteractionResult.CONSUME;
+                } else if (!p_225533_1_.getValue(RIGHT) && p_225533_1_.getValue(LEFT)){
+                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(RIGHT, true),0);
+                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+                    if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.BUCKET));
+                    return InteractionResult.CONSUME;
+                }
+            } else if (p_225533_4_.getMainHandItem().getItem() == Items.BUCKET){
+                if (!(p_225533_1_.getValue(WATER) || p_225533_1_.getValue(AIR) || p_225533_1_.getValue(FIRE) || p_225533_1_.getValue(EARTH))){
+                    if (p_225533_1_.getValue(RIGHT)){
+                        p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(RIGHT, false),0);
+                        if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+                        if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.LAVA_BUCKET));
+                        return InteractionResult.CONSUME;
+                    } else if (!p_225533_1_.getValue(RIGHT) && p_225533_1_.getValue(LEFT)){
+                        p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(LEFT, false),0);
+                        if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+                        if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.LAVA_BUCKET));
+                        return InteractionResult.CONSUME;
+                    }
+                } else {
+                    p_225533_4_.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"),true);
+                }
+            }
+        }else {
+            if (p_225533_4_.isCrouching()){
+                if (!(p_225533_1_.getValue(WATER) || p_225533_1_.getValue(AIR) || p_225533_1_.getValue(FIRE) || p_225533_1_.getValue(EARTH))){
+                    if (p_225533_1_.getValue(MOLD)) {
+                        p_225533_2_.setBlock(p_225533_3_, p_225533_1_.setValue(MOLD, false), 0);
+                        if (!p_225533_4_.isCreative())
+                            p_225533_4_.addItem(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
+                        return InteractionResult.CONSUME;
+                    }
+                } else {
+                    p_225533_4_.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"),true);
+                }
+            }
+        }
+
+
+        return InteractionResult.PASS;
+    }
+    
+    
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
+        return super.getStateForPlacement(p_196258_1_).setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite()).setValue(MOLD,false).setValue(RIGHT,false).setValue(LEFT,false).setValue(WATER,false).setValue(AIR,false).setValue(FIRE,false).setValue(EARTH,false);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
+        if (RIGHT == null) TechResourcesCrystal.LOGGER.warn("Right property is null !");
+        if (LEFT == null) TechResourcesCrystal.LOGGER.warn("Left property is null !");
+        if (WATER == null) TechResourcesCrystal.LOGGER.warn("Water property is null !");
+        if (AIR == null) TechResourcesCrystal.LOGGER.warn("Air property is null !");
+        if (FIRE == null) TechResourcesCrystal.LOGGER.warn("Fire property is null !");
+        if (EARTH == null) TechResourcesCrystal.LOGGER.warn("Earth property is null !");
+        if (MOLD == null) TechResourcesCrystal.LOGGER.warn("Mold property is null !");
+        if (FACING == null) TechResourcesCrystal.LOGGER.warn("Facing property is null !");
+        p_206840_1_.add(FACING);
+        p_206840_1_.add(MOLD);
+        p_206840_1_.add(RIGHT);
+        p_206840_1_.add(LEFT);
+        p_206840_1_.add(WATER);
+        p_206840_1_.add(AIR);
+        p_206840_1_.add(FIRE);
+        p_206840_1_.add(EARTH);
+        super.createBlockStateDefinition(p_206840_1_);
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @org.jetbrains.annotations.Nullable Direction direction) {
+        return !state.getValue(WATER) && !state.getValue(AIR) && !state.getValue(FIRE) && !state.getValue(EARTH);
+    }
+    private boolean redstoneIsActivated(Level world, BlockPos pos) {
+        if (world.hasNeighborSignal(pos)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void neighborChanged(BlockState p_60509_, Level p_60510_, BlockPos p_60511_, Block p_60512_, BlockPos p_60513_, boolean p_60514_) {
+        Timer timer = new Timer();
+        if (redstoneIsActivated(p_60510_,p_60511_)){
+            BlockPos newPos = p_60511_.offset(0,-1,0);
+            if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_WATER_CRYSTAL_CORE.get())) {
+                if (!p_60509_.getValue(WATER)) {
+                    if (checkNeeded(p_60509_)) {
+                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedWaterCrystalCore.CRYSTAL) == 3) {
+                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(WATER, Boolean.valueOf(true)));
+                            p_60510_.destroyBlock(newPos, false);
+                            
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(WATER, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
+                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.WATER_CRYSTAL.get()));
+                                    timer.cancel();
+                                }
+                            }, 30000L);
+                        }
+                    }
+                }
+            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_AIR_CRYSTAL_CORE.get())){
+                if (!p_60509_.getValue(AIR)) {
+                    if (checkNeeded(p_60509_)){
+                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedAirCrystalCore.CRYSTAL) == 3){
+                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(AIR, Boolean.valueOf(true)));
+                            p_60510_.destroyBlock(newPos, false);
+                            
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(AIR, Boolean.valueOf(false)).setValue(LEFT,Boolean.valueOf(false)).setValue(RIGHT,Boolean.valueOf(false)));
+                                        Block.popResource(p_60510_,p_60511_.offset(0,1,0),new ItemStack(ModItem.AIR_CRYSTAL.get()));
+                                    timer.cancel();
+                                }
+                            },30000L);
+                        }
+                    }
+
+                }
+            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_FIRE_CRYSTAL_CORE.get())){
+                if (!p_60509_.getValue(FIRE)) {
+                    if (checkNeeded(p_60509_)){
+                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedFireCrystalCore.CRYSTAL) == 3){
+                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(FIRE, Boolean.valueOf(true)));
+                            p_60510_.destroyBlock(newPos, false);
+                            
+                            
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(FIRE, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
+                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.FIRE_CRYSTAL.get()));
+                                    timer.cancel();
+                                }
+                            },30000L);
+                        }
+                    }
+
+                }
+            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_EARTH_CRYSTAL_CORE.get())){
+                if (!p_60509_.getValue(EARTH)) {
+                    if (checkNeeded(p_60509_)){
+                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedEarthCrystalCore.CRYSTAL) == 3){
+                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(EARTH, Boolean.valueOf(true)));
+                            p_60510_.destroyBlock(newPos, false);
+                            
+                            
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(EARTH, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
+                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.EARTH_CRYSTAL.get()));
+                                    timer.cancel();
+                                }
+                            },30000L);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    private boolean checkNeeded(BlockState bs) {
+        return bs.getValue(RIGHT) &&bs.getValue(LEFT) &&bs.getValue(MOLD);
+    }
+
+    @Override
+    public PushReaction getPistonPushReaction(BlockState p_60584_) {
+        return PushReaction.BLOCK;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_60550_) {
+        return RenderShape.MODEL;
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "tag": "techresourcescrystal:crystals"
+  },
+  "result": "minecraft:amethyst_shard",
+  "count": 18
+}

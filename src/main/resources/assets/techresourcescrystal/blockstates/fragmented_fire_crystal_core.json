@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "crystal=0": { "model": "techresourcescrystal:block/fragmented_fire_crystal_core" },
+    "crystal=1": { "model": "techresourcescrystal:block/fragment_fire_crystal_layer_1"},
+    "crystal=2": { "model": "techresourcescrystal:block/fragment_fire_crystal_layer_2"},
+    "crystal=3": { "model": "techresourcescrystal:block/fragment_fire_crystal_layer_3"}
+  }
+}

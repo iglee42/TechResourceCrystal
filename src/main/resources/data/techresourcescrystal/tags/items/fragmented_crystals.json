@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "techresourcescrystal:fragmented_water_crystal_item",
+    "techresourcescrystal:fragmented_air_crystal_item",
+    "techresourcescrystal:fragmented_fire_crystal_item",
+    "techresourcescrystal:fragmented_earth_crystal_item"
+  ]
+}

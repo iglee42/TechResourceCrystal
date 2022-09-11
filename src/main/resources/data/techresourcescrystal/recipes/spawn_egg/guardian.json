@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:prismarine_shard"
+  },
+  "result": {
+    "item": "minecraft:guardian_spawn_egg"
+  }
+}

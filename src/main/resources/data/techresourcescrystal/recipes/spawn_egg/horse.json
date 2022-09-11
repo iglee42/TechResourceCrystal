@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:leather"
+  },
+  "result": {
+    "item": "minecraft:horse_spawn_egg"
+  }
+}

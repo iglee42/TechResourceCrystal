@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "techresourcescrystal:air_crystal"
+  },
+  "result": "techresourcescrystal:air_plate",
+  "count": 4
+}

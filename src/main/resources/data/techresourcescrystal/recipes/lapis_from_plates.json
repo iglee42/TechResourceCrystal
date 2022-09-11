@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "ECA",
+    " W "
+  ],
+  "key": {
+    "E": {
+      "item": "techresourcescrystal:earth_plate"
+    },
+    "W": {
+      "item": "techresourcescrystal:water_plate"
+    },
+    "A": {
+      "item": "techresourcescrystal:air_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:minerals_mold"
+    }
+  },
+  "result": {
+    "item": "minecraft:lapis_lazuli",
+    "count": 24
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:llama_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:orange_carpet"
+  },
+  "result": {
+    "item": "minecraft:trader_llama_spawn_egg"
+  }
+}

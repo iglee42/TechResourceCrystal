@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:dolphin_hide"
+  },
+  "result": {
+    "item": "minecraft:dolphin_spawn_egg"
+  }
+}

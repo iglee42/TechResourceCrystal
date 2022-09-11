@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "ECE",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcescrystal:fire_plate"
+    },
+    "E": {
+      "item": "techresourcescrystal:earth_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:minerals_mold"
+    }
+  },
+  "result": {
+    "item": "minecraft:emerald",
+    "count": 8
+  }
+}

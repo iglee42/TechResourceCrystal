@@ -1,0 +1,6 @@
+{
+	"parent": "techresourcescrystal:item/fragmented_crystal_item",
+	"textures": {
+		"1": "techresourcescrystal:item/crystal/water"
+	}
+}

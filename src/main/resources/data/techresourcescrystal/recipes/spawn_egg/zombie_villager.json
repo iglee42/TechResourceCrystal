@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:fragmented_emerald"
+  },
+  "result": {
+    "item": "minecraft:zombie_villager_spawn_egg"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "techresourcescrystal:earth_crystal"
+  },
+  "result": "techresourcescrystal:earth_plate",
+  "count": 4
+}

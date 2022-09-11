@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "minecraft:tropical_fish"
+  },
+  "result": {
+    "item": "minecraft:tropical_fish_spawn_egg"
+  }
+}

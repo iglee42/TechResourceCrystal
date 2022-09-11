@@ -118,3 +118,4 @@ run/
 !gradle-wrapper.jar
 /src/main/resources/assets/techresourcescrystal/models/item/easter.json
 /src/main/java/fr/iglee42/techresourcecrystal/event/EasterClientsEvents.java
+/src/main/resources/assets/techresourcescrystal/textures/item/easter.png

@@ -4,5 +4,13 @@
             "layer0": "techresourcescrystal:item/capture_stone",
             "layer1": "techresourcescrystal:item/capture_stone_overlay",
             "layer2": "techresourcescrystal:item/capture_stone_overlay_1"
-        }
+        },
+     "overrides": [
+         {
+           "predicate": {
+             "techresourcescrystal:easter": 1.0
+           },
+           "model": "techresourcescrystal:item/easter"
+         }
+       ]
 }

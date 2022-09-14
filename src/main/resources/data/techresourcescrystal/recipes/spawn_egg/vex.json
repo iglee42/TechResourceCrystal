@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:vex_wing"
+  },
+  "result": {
+    "item": "minecraft:vex_spawn_egg"
+  }
+}

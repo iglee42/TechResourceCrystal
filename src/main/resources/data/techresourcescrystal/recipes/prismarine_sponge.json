@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CPC",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "P": {
+      "item": "minecraft:sponge"
+    },
+    "C": {
+      "item": "minecraft:prismarine_crystals"
+    }
+  },
+  "result": {
+    "item": "techresourcescrystal:prismarine_sponge",
+    "count": 1
+  }
+}

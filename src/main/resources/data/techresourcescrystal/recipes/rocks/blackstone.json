@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I",
+    "C",
+    "E"
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcescrystal:fire_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:rocks_mold"
+    },
+    "E": {
+      "item": "techresourcescrystal:earth_plate"
+    }
+  },
+  "result": {
+    "item": "minecraft:blackstone",
+    "count": 24
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:emerald"
+  },
+  "result": "techresourcescrystal:fragmented_emerald",
+  "count": 9
+}

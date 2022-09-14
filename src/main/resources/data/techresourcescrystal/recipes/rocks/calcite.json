@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "C",
+    "I"
+  ],
+  "key": {
+    "C": {
+      "item": "techresourcescrystal:rocks_mold"
+    },
+    "E": {
+      "item": "techresourcescrystal:water_plate"
+    },
+    "I": {
+      "item": "techresourcescrystal:air_plate"
+    }
+  },
+  "result": {
+    "item": "minecraft:calcite",
+    "count": 24
+  }
+}

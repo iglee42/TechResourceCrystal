@@ -1,8 +1,6 @@
 package fr.iglee42.techresourcecrystal;
 
-import fr.iglee42.techresourcecrystal.init.ModBlock;
-import fr.iglee42.techresourcecrystal.init.ModItem;
-import fr.iglee42.techresourcecrystal.init.ModTiles;
+import fr.iglee42.techresourcecrystal.init.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +29,10 @@ public class TechResourcesCrystal {
         ModItem.ITEMS.register(bus);
         ModBlock.BLOCKS.register(bus);
         ModTiles.TILES.register(bus);
+        ModSounds.REGISTER.register(bus);
+        ModEntityType.ENTITY_TYPES.register(bus);
+
+
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 

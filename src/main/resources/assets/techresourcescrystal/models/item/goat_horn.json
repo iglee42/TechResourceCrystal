@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "techresourcescrystal:item/mob/goat_horn"
+  },
+     "overrides": [
+                 {
+                   "predicate": {
+                     "techresourcescrystal:easter2": 1.0
+                   },
+                   "model": "techresourcescrystal:item/mldeg"
+                 }
+            ]
+}

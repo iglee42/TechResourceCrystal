@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I",
+    "C",
+    "E"
+  ],
+  "key": {
+    "C": {
+      "item": "techresourcescrystal:rocks_mold"
+    },
+    "E": {
+      "item": "techresourcescrystal:fire_plate"
+    },
+    "I": {
+      "item": "techresourcescrystal:air_plate"
+    }
+  },
+  "result": {
+    "item": "minecraft:cobbled_deepslate",
+    "count": 24
+  }
+}

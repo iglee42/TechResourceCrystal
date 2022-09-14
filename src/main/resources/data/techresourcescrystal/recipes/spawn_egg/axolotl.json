@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:axolotl_scute"
+  },
+  "result": {
+    "item": "minecraft:axolotl_spawn_egg"
+  }
+}

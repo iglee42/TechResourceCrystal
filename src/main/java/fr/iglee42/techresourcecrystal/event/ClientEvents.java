@@ -1,16 +1,18 @@
 package fr.iglee42.techresourcecrystal.event;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
+import fr.iglee42.techresourcecrystal.client.renderer.entity.FreezeArrowRenderer;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
+import fr.iglee42.techresourcecrystal.init.ModEntityType;
 import fr.iglee42.techresourcecrystal.init.ModItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -38,6 +40,11 @@ public class ClientEvents {
                 info = SpawnEggItem.byId(ForgeRegistries.ENTITIES.getValue(id));
             }
             return info != null ? (tintIndex == 1 ? info.getColor(0) : (tintIndex == 2 ? info.getColor(1) : 0XFFFFFF )): 0XFFFFFF;
+    }
+
+    @SubscribeEvent
+    public static void rendererStuff(final EntityRenderersEvent.RegisterRenderers event){
+        event.registerEntityRenderer(ModEntityType.FREEZE_ARROW.get(), FreezeArrowRenderer::new);
     }
 
 

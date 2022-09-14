@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:bat_wing"
+  },
+  "addition": {
+    "item": "minecraft:iron_sword"
+  },
+  "result": {
+    "item": "techresourcescrystal:vex_wing"
+  }
+}

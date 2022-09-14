@@ -1,9 +1,6 @@
 {
-  "item.techresourcescrystal.crystaliser_mold": "Crystaliser Mold",
-  "item.techresourcescrystal.mob_mold": "Mob Mold",
-  "item.techresourcescrystal.minerals_mold": "Minerals Mold",
-  "block.techresourcescrystal.crystaliser": "Crystaliser",
-  "itemGroup.techresourcescrystal.crystal_group": "TechResources - Crystal",
+
+  "item.techresourcescrystal.unified_crystal": "Unified Crystal",
   "item.techresourcescrystal.water_crystal": "Water Crystal",
   "item.techresourcescrystal.fragmented_water_crystal_item": "Fragmented Water Crystal",
   "block.techresourcescrystal.fragmented_water_crystal": "Fragmented Water Crystal",
@@ -24,5 +21,39 @@
   "item.techresourcescrystal.air_plate": "Air Crystal Plate",
   "item.techresourcescrystal.fire_plate": "Fire Crystal Plate",
   "item.techresourcescrystal.earth_plate": "Earth Crystal Plate",
-  "item.techresourcescrystal.capture_stone": "Capture Stone"
+
+
+
+  "item.techresourcescrystal.capture_stone": "Capture Stone",
+  "item.techresourcescrystal.crystaliser_mold": "Crystaliser Mold",
+  "item.techresourcescrystal.mob_mold": "Mob Mold",
+  "item.techresourcescrystal.unified_mob_mold": "Unified Mob Mold",
+  "item.techresourcescrystal.minerals_mold": "Minerals Mold",
+  "item.techresourcescrystal.rocks_mold": "Rocks Mold",
+  "item.techresourcescrystal.crystalised_spawn_egg": "Crystal Spawn Egg",
+  "block.techresourcescrystal.crystaliser": "Crystaliser",
+  "block.techresourcescrystal.prismarine_sponge": "Prismarine Sponge",
+  "itemGroup.techresourcescrystal.crystal_group": "TechResources - Crystal",
+  "information.dropby": "Dropped by ",
+
+  "item.techresourcescrystal.dolphin_hide": "Dolphin Hide",
+  "item.techresourcescrystal.donkey_leather": "Donkey Leather",
+  "item.techresourcescrystal.drowned_flesh": "Drowned Flesh",
+  "item.techresourcescrystal.fox_fur": "Fox Fur",
+  "item.techresourcescrystal.goat_horn": "Goat Horn",
+  "item.techresourcescrystal.nether_leather": "Nether Leather",
+  "item.techresourcescrystal.sanded_flesh": "Sanded Flesh",
+  "item.techresourcescrystal.llama_leather": "Llama Leather",
+  "item.techresourcescrystal.mule_leather": "Mule Leather",
+  "item.techresourcescrystal.polar_bear_fur": "Polar Bear Fur",
+  "item.techresourcescrystal.freeze_arrow": "Freeze Arrow",
+  "item.techresourcescrystal.wither_bone": "Wither Bone",
+  "item.techresourcescrystal.wolf_hide": "Wolf Hide",
+  "item.techresourcescrystal.zombified_porkchop": "Zombified Porkchop",
+  "item.techresourcescrystal.fragmented_emerald": "Fragmented Emerald",
+  "item.techresourcescrystal.nether_flesh": "Nether Flesh",
+  "item.techresourcescrystal.bat_wing": "Bat Wing",
+  "item.techresourcescrystal.vex_wing": "Vex Wing",
+  "item.techresourcescrystal.cat_hide": "Cat Hide",
+  "item.techresourcescrystal.axolotl_scute": "Axolotl Scute"
 }

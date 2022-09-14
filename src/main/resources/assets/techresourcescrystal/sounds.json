@@ -1,0 +1,20 @@
+{
+    "item.goat_horn.base": {
+        "subtitle": "subtitle.goat_horn.base",
+        "sounds": [
+            "techresourcescrystal:item/goat_horn/base"
+        ]
+    },"item.goat_horn.drakonic": {
+        "subtitle": "subtitle.goat_horn.easter_egg",
+        "sounds": [
+            "techresourcescrystal:item/goat_horn/drakonik"
+        ]
+    },
+    "item.goat_horn.drakonic_1": {
+        "subtitle": "subtitle.goat_horn.easter_egg",
+        "sounds": [
+            "techresourcescrystal:item/goat_horn/drakonik_1"
+        ]
+    }
+}
+

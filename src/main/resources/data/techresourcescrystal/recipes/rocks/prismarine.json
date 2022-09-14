@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "C",
+    "E"
+  ],
+  "key": {
+    "C": {
+      "item": "techresourcescrystal:rocks_mold"
+    },
+    "E": {
+      "item": "techresourcescrystal:water_plate"
+    }
+  },
+  "result": {
+    "item": "minecraft:prismarine",
+    "count": 8
+  }
+}

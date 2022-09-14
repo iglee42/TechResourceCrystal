@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:egg"
+  },
+  "addition": {
+    "item": "techresourcescrystal:unified_mob_mold"
+  },
+  "result": {
+    "item": "techresourcescrystal:crystalised_spawn_egg"
+  }
+}

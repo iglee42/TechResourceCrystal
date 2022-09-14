@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "ICI",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "C": {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "techresourcescrystal:rocks_mold"
+  }
+}

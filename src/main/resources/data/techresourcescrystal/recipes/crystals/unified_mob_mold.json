@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "techresourcescrystal:mob_mold"
+  },
+  "addition": {
+    "item": "techresourcescrystal:unified_crystal"
+  },
+  "result": {
+    "item": "techresourcescrystal:unified_mob_mold"
+  }
+}

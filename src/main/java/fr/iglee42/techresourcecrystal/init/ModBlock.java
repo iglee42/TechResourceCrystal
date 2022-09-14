@@ -27,6 +27,7 @@ public class ModBlock {
     public static final RegistryObject<Block> CRYSTALISER = createBlock("crystaliser", BlockCrystaliser::new);
 
    // public static final RegistryObject<Block> ROCK_CRYSTAL = createBlock("rock_crystal",BlockRockCrystal::new);
+   public static final RegistryObject<Block> PRIMSARINE_SPONGE = createBlock("prismarine_sponge", BlockPrismarineSponge::new);
 
     public static RegistryObject<Block> createBlock(String name, Supplier<? extends Block> supplier)
     {

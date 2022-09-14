@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "techresourcescrystal:water_crystal"},
+    {"item": "techresourcescrystal:air_crystal"},
+    {"item": "techresourcescrystal:fire_crystal"},
+    {"item": "techresourcescrystal:earth_crystal"}
+  ],
+  "result": {
+    "item": "techresourcescrystal:unified_crystal",
+    "count": 1
+  }
+}

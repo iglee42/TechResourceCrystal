@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "C",
+    "I"
+  ],
+  "key": {
+    "I": {
+      "item": "techresourcescrystal:water_plate"
+    },
+    "C": {
+      "item": "techresourcescrystal:rocks_mold"
+    },
+    "E": {
+      "item": "techresourcescrystal:earth_plate"
+    }
+  },
+  "result": {
+    "item": "minecraft:andesite",
+    "count": 24
+  }
+}

@@ -2,5 +2,13 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "techresourcescrystal:item/mob_mold"
-  }
+  },
+        "overrides": [
+            {
+              "predicate": {
+                "techresourcescrystal:easter": 1.0
+              },
+              "model": "techresourcescrystal:item/easter"
+            }
+          ]
 }

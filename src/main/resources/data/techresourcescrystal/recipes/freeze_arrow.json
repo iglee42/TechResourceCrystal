@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:spectral_arrow"
+  },
+  "addition": {
+    "item": "minecraft:blue_ice"
+  },
+  "result": {
+    "item": "techresourcescrystal:freeze_arrow"
+  }
+}

@@ -4,7 +4,7 @@
     "item": "minecraft:trader_llama_spawn_egg"
   },
   "addition": {
-    "item": "minecraft:emerald_blocke"
+    "item": "minecraft:emerald_block"
   },
   "result": {
     "item": "minecraft:wandering_trader_spawn_egg"

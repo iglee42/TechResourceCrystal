@@ -22,7 +22,7 @@ public class CrystalsJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration){
-        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,new TextComponent("You need to place above a full fragmented crystal core"),new TextComponent("You need to fill the crystaliser with 2 lava buckets and add a crystaliser mold"),new TextComponent("When you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystallization.\nThe crystallization take 30 seconds."));
+        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,new TextComponent("\n\nYou must place it above a fully fragmented crystal core"),new TextComponent("\n\nYou need to fill the crystaliser with 2 lava buckets and add a crystaliser mold"),new TextComponent("\n\nWhen you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystallization.\nThe crystallization take 30 seconds."));
         registration.addIngredientInfo(new ItemStack(ModBlock.FRAGMENTED_FIRE_CRYSTAL.get()),VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on blaze with amethyst block. The mob has a 30 seconds cooldown"));
         registration.addIngredientInfo(new ItemStack(ModBlock.FRAGMENTED_AIR_CRYSTAL.get()),VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on phantom with amethyst block. The mob has a 30 seconds cooldown"));
         registration.addIngredientInfo(new ItemStack(ModBlock.FRAGMENTED_EARTH_CRYSTAL.get()),VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on creeper with amethyst block. The mob has a 30 seconds cooldown"));
@@ -32,7 +32,7 @@ public class CrystalsJEIPlugin implements IModPlugin {
         cores.add(new ItemStack(ModBlock.FRAGMENTED_WATER_CRYSTAL_CORE.get()));
         cores.add(new ItemStack(ModBlock.FRAGMENTED_FIRE_CRYSTAL_CORE.get()));
         cores.add(new ItemStack(ModBlock.FRAGMENTED_AIR_CRYSTAL_CORE.get()));
-        registration.addIngredientInfo(cores,VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on the fragmented crystal of the same type with a lava shard"));
+        registration.addIngredientInfo(cores,VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on the fragmented crystal of the same type with a lava shard"),new TextComponent("\n\nTo fill it you need to right click on with the fragmented crystal (item) of the same type."));
         //List<ItemStack> hides = new ArrayList<>();
         //registration.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, new ArrayList<>(hides));
     }

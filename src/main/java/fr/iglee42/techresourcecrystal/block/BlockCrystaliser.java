@@ -1,7 +1,9 @@
 package fr.iglee42.techresourcecrystal.block;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
+import fr.iglee42.techresourcecrystal.block.entity.CrystaliserBlockEntity;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
+import fr.iglee42.techresourcecrystal.init.ModBlockEntity;
 import fr.iglee42.techresourcecrystal.init.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,8 +16,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -32,7 +38,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BlockCrystaliser extends Block{
+public class BlockCrystaliser extends BaseEntityBlock {
 
     public static final BooleanProperty RIGHT =  BooleanProperty.create("right");
     public static final BooleanProperty LEFT =  BooleanProperty.create("left");
@@ -60,54 +66,54 @@ public class BlockCrystaliser extends Block{
     }
 
     @Override
-    public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_){
-        if (p_225533_4_.getMainHandItem().getItem() != Items.AIR){
-            if (p_225533_4_.getMainHandItem().getItem() == ModItem.CRYSTALISER_MOLD.get()){
-                if (!p_225533_1_.getValue(MOLD)){
-                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(MOLD, true),0);
-                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult){
+        if (player.getMainHandItem().getItem() != Items.AIR){
+            if (player.getMainHandItem().getItem() == ModItem.CRYSTALISER_MOLD.get()){
+                if (!state.getValue(MOLD)){
+                    level.setBlock(pos,state.setValue(MOLD, true),0);
+                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
                     return InteractionResult.CONSUME;
                 }
-            } else if (p_225533_4_.getMainHandItem().getItem() == Items.LAVA_BUCKET){
-                if (!p_225533_1_.getValue(LEFT)){
-                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(LEFT, true),0);
-                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
-                    if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.BUCKET));
+            } else if (player.getMainHandItem().getItem() == Items.LAVA_BUCKET){
+                if (!state.getValue(LEFT)){
+                    level.setBlock(pos,state.setValue(LEFT, true),0);
+                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
+                    if (!player.isCreative())player.addItem(new ItemStack(Items.BUCKET));
                     return InteractionResult.CONSUME;
-                } else if (!p_225533_1_.getValue(RIGHT) && p_225533_1_.getValue(LEFT)){
-                    p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(RIGHT, true),0);
-                    if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
-                    if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.BUCKET));
+                } else if (!state.getValue(RIGHT) && state.getValue(LEFT)){
+                    level.setBlock(pos,state.setValue(RIGHT, true),0);
+                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
+                    if (!player.isCreative())player.addItem(new ItemStack(Items.BUCKET));
                     return InteractionResult.CONSUME;
                 }
-            } else if (p_225533_4_.getMainHandItem().getItem() == Items.BUCKET){
-                if (!(p_225533_1_.getValue(WATER) || p_225533_1_.getValue(AIR) || p_225533_1_.getValue(FIRE) || p_225533_1_.getValue(EARTH))){
-                    if (p_225533_1_.getValue(RIGHT)){
-                        p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(RIGHT, false),0);
-                        if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
-                        if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.LAVA_BUCKET));
+            } else if (player.getMainHandItem().getItem() == Items.BUCKET){
+                if (!(state.getValue(WATER) || state.getValue(AIR) || state.getValue(FIRE) || state.getValue(EARTH))){
+                    if (state.getValue(RIGHT)){
+                        level.setBlock(pos,state.setValue(RIGHT, false),0);
+                        if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
+                        if (!player.isCreative())player.addItem(new ItemStack(Items.LAVA_BUCKET));
                         return InteractionResult.CONSUME;
-                    } else if (!p_225533_1_.getValue(RIGHT) && p_225533_1_.getValue(LEFT)){
-                        p_225533_2_.setBlock(p_225533_3_,p_225533_1_.setValue(LEFT, false),0);
-                        if (!p_225533_4_.isCreative())p_225533_4_.getMainHandItem().setCount(p_225533_4_.getMainHandItem().getCount() -1);
-                        if (!p_225533_4_.isCreative())p_225533_4_.addItem(new ItemStack(Items.LAVA_BUCKET));
+                    } else if (!state.getValue(RIGHT) && state.getValue(LEFT)){
+                        level.setBlock(pos,state.setValue(LEFT, false),0);
+                        if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
+                        if (!player.isCreative())player.addItem(new ItemStack(Items.LAVA_BUCKET));
                         return InteractionResult.CONSUME;
                     }
                 } else {
-                    p_225533_4_.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"),true);
+                    player.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"),true);
                 }
             }
         }else {
-            if (p_225533_4_.isCrouching()){
-                if (!(p_225533_1_.getValue(WATER) || p_225533_1_.getValue(AIR) || p_225533_1_.getValue(FIRE) || p_225533_1_.getValue(EARTH))){
-                    if (p_225533_1_.getValue(MOLD)) {
-                        p_225533_2_.setBlock(p_225533_3_, p_225533_1_.setValue(MOLD, false), 0);
-                        if (!p_225533_4_.isCreative())
-                            p_225533_4_.addItem(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
+            if (player.isCrouching()){
+                if (!(state.getValue(WATER) || state.getValue(AIR) || state.getValue(FIRE) || state.getValue(EARTH))){
+                    if (state.getValue(MOLD)) {
+                        level.setBlock(pos, state.setValue(MOLD, false), 0);
+                        if (!player.isCreative())
+                            player.addItem(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
                         return InteractionResult.CONSUME;
                     }
                 } else {
-                    p_225533_4_.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"),true);
+                    player.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"),true);
                 }
             }
         }
@@ -254,5 +260,15 @@ public class BlockCrystaliser extends Block{
     @Override
     public RenderShape getRenderShape(BlockState p_60550_) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new CrystaliserBlockEntity(p_153215_,p_153216_);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return createTickerHelper(p_153214_,ModBlockEntity.CRYSTALISER.get(),CrystaliserBlockEntity::tick);
     }
 }

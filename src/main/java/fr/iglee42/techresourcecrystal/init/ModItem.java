@@ -1,6 +1,7 @@
 package fr.iglee42.techresourcecrystal.init;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
+import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.item.ItemFreezeArrow;
 import fr.iglee42.techresourcecrystal.item.ItemCaptureStone;
 import fr.iglee42.techresourcecrystal.item.ItemGoatHorn;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -126,4 +128,28 @@ public class ModItem {
     public static final RegistryObject<Item> CAT_HIDE = ITEMS.register("cat_hide", ()-> new ItemMobDrop(EntityType.CAT,new Item.Properties().tab(TechResourcesCrystal.CRYSTAL_GROUP)));//l
     public static final RegistryObject<Item> VEX_WING = ITEMS.register("vex_wing", ()-> new Item(new Item.Properties().tab(TechResourcesCrystal.CRYSTAL_GROUP)));//f
     public static final RegistryObject<Item> BAT_WING = ITEMS.register("bat_wing", ()-> new ItemMobDrop(EntityType.BAT,new Item.Properties().tab(TechResourcesCrystal.CRYSTAL_GROUP)));//f
+
+    public static void createCrystal(String type) {
+        if (!TypesConstants.isValidType(type)) return;
+        ITEMS.register("fragmented_"+type+"_crystal_item",()-> new Item(new Item.Properties().tab(TechResourcesCrystal.CRYSTAL_GROUP).stacksTo(3)));
+        ITEMS.register(type+ "_crystal",() -> new Item(new Item.Properties().stacksTo(1).tab(TechResourcesCrystal.CRYSTAL_GROUP)));
+        ITEMS.register(type+"_plate", () -> new Item(new Item.Properties().tab(TechResourcesCrystal.CRYSTAL_GROUP)));
+    }
+
+    public static Item getCrystal(String type){
+        if (!TypesConstants.isValidType(type)) return null;
+        if (ITEMS.getEntries().stream().noneMatch(b -> b.getId().getPath().equals(type+"_crystal"))) throw new IllegalArgumentException("The crystal type is unknow");
+        return ITEMS.getEntries().stream().filter(b -> b.getId().getPath().equals(type+"_crystal")).findFirst().get().get();
+    }
+
+    public static Item getFragmentedCrystal(String type){
+        if (!TypesConstants.isValidType(type)) return null;
+        if (ITEMS.getEntries().stream().noneMatch(b -> b.getId().getPath().equals("fragmented_"+type+"_crystal_item"))) throw new IllegalArgumentException("The fragmented crystal type is unknow");
+        return ITEMS.getEntries().stream().filter(b -> b.getId().getPath().equals("fragmented_"+type+"_crystal_item")).findFirst().get().get();
+    }
+    public static Item getPlate(String type){
+        if (!TypesConstants.isValidType(type)) return null;
+        if (ITEMS.getEntries().stream().noneMatch(b -> b.getId().getPath().equals(type+"_plate"))) throw new IllegalArgumentException("The crystal plate type is unknow");
+        return ITEMS.getEntries().stream().filter(b -> b.getId().getPath().equals(type+"_plate")).findFirst().get().get();
+    }
 }

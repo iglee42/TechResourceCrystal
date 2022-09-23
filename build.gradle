@@ -155,7 +155,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-    implementation fg.deobf("fr.iglee42.techresourcesbase:TechResourcesBase:${mc_version}-${lib_version}")
+    implementation fg.deobf("fr.iglee42.techresourcesbase:TechResourcesBase:${mc_version}-${lib_version}") { changing = true }
     //compileOnly fg.deobf("fr.iglee42.techresourcesbase:TechResourcesBase:${MC_VERSION}-${LIB_VERSION}")
     // Examples using mod jars from ./libs
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")

@@ -26,6 +26,7 @@ public class CustomsItemModelsProvider extends ItemModelProvider {
     @Override
     public void registerModels() {
         for (Crystal c : TypesConstants.TYPES){
+            if (c.isInModBase()) continue;
             fromBlock(Objects.requireNonNull(ModBlock.getFragmentedCrystal(c.name())));
             fromBlock(Objects.requireNonNull(ModBlock.getCrystalCore(c.name())));
             fragmentedCrystal(c.name());

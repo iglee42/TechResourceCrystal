@@ -7,6 +7,7 @@ import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
 import fr.iglee42.techresourcesbase.utils.JsonHelper;
 import fr.iglee42.techresourcesbase.utils.ModsUtils;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -41,6 +42,11 @@ public class TypesConstants {
     }
 
     private static void readAllFiles() {
+        TYPES.add(new Crystal("water", EntityType.GUARDIAN,true,true,true,true,true,true));
+        TYPES.add(new Crystal("fire", EntityType.BLAZE,true,true,true,true,true,true));
+        TYPES.add(new Crystal("earth", EntityType.CREEPER,true,true,true,true,true,true));
+        TYPES.add(new Crystal("air", EntityType.PHANTOM,true,true,true,true,true,true));
+
         File dir = FMLPaths.CONFIGDIR.get().resolve("techresourcescrystal/crystals/").toFile();
         if (!dir.exists() && dir.mkdirs()){
             dir.mkdir();
@@ -60,7 +66,7 @@ public class TypesConstants {
                     reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
                     json = parser.parse(reader).getAsJsonObject();
                     if (json.get("name").getAsString().isEmpty()) throw new NullPointerException("The name can't be empty ! (" + file.getName() + ")" );
-                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityType(json,"entity"), JsonHelper.getBoolean(json,"hasPlateRecipe"),JsonHelper.getBoolean(json,"hasCrystaliserRecipe"),JsonHelper.getBoolean(json,"hasMobRecipe"),JsonHelper.getBoolean(json,"dropFragmented")));
+                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityType(json,"entity"), JsonHelper.getBoolean(json,"hasPlateRecipe"),JsonHelper.getBoolean(json,"hasCrystaliserRecipe"),JsonHelper.getBoolean(json,"hasMobRecipe"),JsonHelper.getBoolean(json,"dropFragmented"),JsonHelper.getBoolean(json,"hasCoreRecipe"),false));
                     reader.close();
                 } catch (Exception e) {
                     TechResourcesCrystal.LOGGER.error("An error occurred while loading minerals", e);
@@ -77,4 +83,8 @@ public class TypesConstants {
         return true;
     }
 
+    public static Crystal getType(String type) {
+        if (!isValidType(type)) return null;
+        return TYPES.stream().filter(c->c.name().equals(type)).findFirst().get();
+    }
 }

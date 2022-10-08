@@ -28,6 +28,7 @@ public class CustomsBlockModelsProvider extends BlockModelProvider {
     @Override
     public void registerModels() {
         for (Crystal c : TypesConstants.TYPES){
+            if (c.isInModBase()) continue;
             fragmentedBlock(Objects.requireNonNull(ModBlock.getFragmentedCrystal(c.name())));
             layerCore(Objects.requireNonNull(ModBlock.getFragmentedCrystal(c.name())),1);
             layerCore(Objects.requireNonNull(ModBlock.getFragmentedCrystal(c.name())),2);

@@ -27,6 +27,7 @@ public class CustomsLanguagesProvider extends LanguageProvider {
     @Override
     public void addTranslations() {
         for (Crystal c : TypesConstants.TYPES){
+            if (c.isInModBase()) continue;
             add(ModBlock.getFragmentedCrystal(c.name()),"Fragmented " + ModsUtils.getUpperName(c.name(),"_") + " Crystal");
             add(ModBlock.getCrystalCore(c.name()),"Fragmented " + ModsUtils.getUpperName(c.name(),"_") + " Crystal Core");
             add(ModItem.getFragmentedCrystal(c.name()),"Fragmented " + ModsUtils.getUpperName(c.name(),"_") + " Crystal");

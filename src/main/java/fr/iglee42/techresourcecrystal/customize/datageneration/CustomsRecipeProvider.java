@@ -28,6 +28,7 @@ public class CustomsRecipeProvider extends RecipeProvider implements IConditionB
     @Override
     public void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
        for (Crystal type : TypesConstants.TYPES) {
+           if (type.isInModBase()) continue;
            if (type.hasPlateRecipe()) {
                SingleItemRecipeBuilder.stonecutting(
                        Ingredient.of(ModItem.getCrystal(type.name())),

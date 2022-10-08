@@ -1,17 +1,16 @@
 package fr.iglee42.techresourcecrystal;
 
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.DataGeneratorFactory;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
+import fr.iglee42.techresourcecrystal.customize.custompack.PackType;
 import fr.iglee42.techresourcecrystal.customize.custompack.TRCPackFinder;
 import fr.iglee42.techresourcecrystal.customize.datageneration.*;
 import fr.iglee42.techresourcecrystal.init.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
-import fr.iglee42.techresourcecrystal.customize.custompack.PackType;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -30,17 +29,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.imageio.ImageIO;
-import javax.xml.crypto.Data;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.Map;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TechResourcesCrystal.MODID)
@@ -51,7 +41,7 @@ public class TechResourcesCrystal {
     public static final CreativeModeTab CRYSTAL_GROUP = new CreativeModeTab(MODID + ".crystal_group") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItem.FRAGMENTED_WATER_CRYSTAL.get());
+            return new ItemStack(ModItem.UNIFIED_CRYSTAL.get());
         }
     };
     private DataGenerator generator;
@@ -92,6 +82,7 @@ public class TechResourcesCrystal {
         File texturesDir = texturesPath.toFile();
         texturesDir.mkdirs();
         for (Crystal c : TypesConstants.TYPES){
+            if (c.isInModBase()) continue;
             String name = c.name();
             LOGGER.info("Copy Texture for crystal " + name);
 

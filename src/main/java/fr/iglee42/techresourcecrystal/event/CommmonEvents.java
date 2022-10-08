@@ -23,7 +23,7 @@ import java.util.TimerTask;
 @Mod.EventBusSubscriber(modid = TechResourcesCrystal.MODID)
 public class CommmonEvents {
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void entityInteract(final PlayerInteractEvent.EntityInteractSpecific event) {
         if (event.getPlayer().getMainHandItem().getItem() == Items.AIR) return;
         if (event.getPlayer().getMainHandItem().getItem() == Items.AMETHYST_BLOCK) {
@@ -97,7 +97,7 @@ public class CommmonEvents {
         }
 
 
-    }
+    }*/
 
     @SubscribeEvent
     public static void onMobDrops(LivingDropsEvent event) {

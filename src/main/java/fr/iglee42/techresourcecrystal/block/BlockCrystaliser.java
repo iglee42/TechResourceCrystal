@@ -2,6 +2,9 @@ package fr.iglee42.techresourcecrystal.block;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.block.entity.CrystaliserBlockEntity;
+import fr.iglee42.techresourcecrystal.customize.Crystal;
+import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
+import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModBlockEntity;
 import fr.iglee42.techresourcecrystal.init.ModItem;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -163,87 +167,15 @@ public class BlockCrystaliser extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState p_60509_, Level p_60510_, BlockPos p_60511_, Block p_60512_, BlockPos p_60513_, boolean p_60514_) {
-        Timer timer = new Timer();
-        if (redstoneIsActivated(p_60510_,p_60511_)){
-            BlockPos newPos = p_60511_.offset(0,-1,0);
-            if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_WATER_CRYSTAL_CORE.get())) {
-                if (!p_60509_.getValue(WATER)) {
-                    if (checkNeeded(p_60509_)) {
-                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedWaterCrystalCore.CRYSTAL) == 3) {
-                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(WATER, Boolean.valueOf(true)));
-                            p_60510_.destroyBlock(newPos, false);
-                            
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(WATER, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
-                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.WATER_CRYSTAL.get()));
-                                    timer.cancel();
-                                }
-                            }, 30000L);
-                        }
-                    }
-                }
-            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_AIR_CRYSTAL_CORE.get())){
-                if (!p_60509_.getValue(AIR)) {
-                    if (checkNeeded(p_60509_)){
-                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedAirCrystalCore.CRYSTAL) == 3){
-                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(AIR, Boolean.valueOf(true)));
-                            p_60510_.destroyBlock(newPos, false);
-                            
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(AIR, Boolean.valueOf(false)).setValue(LEFT,Boolean.valueOf(false)).setValue(RIGHT,Boolean.valueOf(false)));
-                                        Block.popResource(p_60510_,p_60511_.offset(0,1,0),new ItemStack(ModItem.AIR_CRYSTAL.get()));
-                                    timer.cancel();
-                                }
-                            },30000L);
-                        }
-                    }
-
-                }
-            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_FIRE_CRYSTAL_CORE.get())){
-                if (!p_60509_.getValue(FIRE)) {
-                    if (checkNeeded(p_60509_)){
-                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedFireCrystalCore.CRYSTAL) == 3){
-                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(FIRE, Boolean.valueOf(true)));
-                            p_60510_.destroyBlock(newPos, false);
-                            
-                            
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(FIRE, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
-                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.FIRE_CRYSTAL.get()));
-                                    timer.cancel();
-                                }
-                            },30000L);
-                        }
-                    }
-
-                }
-            } else if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getBlock().equals(ModBlock.FRAGMENTED_EARTH_CRYSTAL_CORE.get())){
-                if (!p_60509_.getValue(EARTH)) {
-                    if (checkNeeded(p_60509_)){
-                        if (p_60510_.getChunkAt(newPos).getBlockState(newPos).getValue(BlockFragmentedEarthCrystalCore.CRYSTAL) == 3){
-                            p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(EARTH, Boolean.valueOf(true)));
-                            p_60510_.destroyBlock(newPos, false);
-                            
-                            
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                        p_60510_.setBlockAndUpdate(p_60511_, p_60509_.setValue(EARTH, Boolean.valueOf(false)).setValue(LEFT, Boolean.valueOf(false)).setValue(RIGHT, Boolean.valueOf(false)));
-                                        Block.popResource(p_60510_, p_60511_.offset(0, 1, 0), new ItemStack(ModItem.EARTH_CRYSTAL.get()));
-                                    timer.cancel();
-                                }
-                            },30000L);
-                        }
-                    }
-
-                }
+    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pPos1, boolean p_60514_) {
+        if (redstoneIsActivated(pLevel,pPos)){
+            BlockPos newPos = pPos.offset(0,-1,0);
+            if (pLevel.getBlockEntity(pPos) instanceof CrystaliserBlockEntity){
+                //Crystal type = TypesConstants.getType(((CustomFragmentedCore)pLevel.getBlockState(newPos).getBlock()).getType());
+                //((CrystaliserBlockEntity)pLevel.getBlockEntity(pPos)).setBlock(pLevel.getBlockState(pPos).getBlock());
+               //pLevel.destroyBlock(newPos,false);
+                pLevel.getRecipeManager().getAllRecipesFor(CustomRecipes.CRYSTALISER).stream().filter(r->Block.byItem(r.getIngredients().get(0).getItems()[0].getItem()).equals(pLevel.getBlockState(newPos).getBlock())).findFirst().ifPresent(r->((CrystaliserBlockEntity)pLevel.getBlockEntity(pPos)).setRecipeUsed(r));
+                pLevel.destroyBlock(newPos,false);
             }
         }
     }

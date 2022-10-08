@@ -1,16 +1,14 @@
 package fr.iglee42.techresourcecrystal.customize.datageneration;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
-import fr.iglee42.techresourcecrystal.block.entity.CustomFragmentedCore;
+import fr.iglee42.techresourcecrystal.block.CustomFragmentedCore;
 import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class CustomsBlockStatesProvider extends BlockStateProvider {
@@ -21,6 +19,7 @@ public class CustomsBlockStatesProvider extends BlockStateProvider {
     @Override
     public void registerStatesAndModels() {
         for (Crystal c : TypesConstants.TYPES){
+            if (c.isInModBase()) continue;
             String name = c.name();
             getVariantBuilder(ModBlock.getCrystalCore(name))
                     .partialState().with(CustomFragmentedCore.CRYSTAL,0).modelForState().modelFile(models().getExistingFile(new ResourceLocation(TechResourcesCrystal.MODID,"fragmented_"+name+"_crystal_core"))).addModel()

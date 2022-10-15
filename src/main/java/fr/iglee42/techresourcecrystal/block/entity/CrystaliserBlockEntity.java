@@ -38,8 +38,8 @@ public class CrystaliserBlockEntity extends BlockEntity implements Container, Re
         super(ModBlockEntity.CRYSTALISER.get(), pos, state);
     }
 
-    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CrystaliserBlockEntity pBlockEntity){
-        if (tick == 20){
+    public void tick(Level lvl, BlockPos pos, BlockState state) {
+        if (tick == 20) {
             tick = 0;
             tickSecond += 1;
             startSecond += 1;

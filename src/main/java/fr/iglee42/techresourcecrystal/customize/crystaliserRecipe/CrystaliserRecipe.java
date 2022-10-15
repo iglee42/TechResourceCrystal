@@ -6,11 +6,13 @@ import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class CrystaliserRecipe implements Recipe<CrystaliserBlockEntity> {
+public class CrystaliserRecipe implements Recipe<SimpleContainer> {
 
      private final ResourceLocation id;
       final Ingredient ingredient;

@@ -1,8 +1,10 @@
 package fr.iglee42.techresourcecrystal.event;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
+import fr.iglee42.techresourcecrystal.customize.crystaliserRecipe.CrystaliserRecipe;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EntityType;
@@ -10,7 +12,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -21,7 +25,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Mod.EventBusSubscriber(modid = TechResourcesCrystal.MODID)
-public class CommmonEvents {
+public class CommonEvents {
+
+    @SubscribeEvent
+    public static void registerRecipeTypes(final RegistryEvent.Register<RecipeSerializer<?>> event) {
+        Registry.register(Registry.RECIPE_TYPE, CrystaliserRecipe.Type.ID, CrystaliserRecipe.Type.INSTANCE);
+    }
 
     /*@SubscribeEvent
     public static void entityInteract(final PlayerInteractEvent.EntityInteractSpecific event) {

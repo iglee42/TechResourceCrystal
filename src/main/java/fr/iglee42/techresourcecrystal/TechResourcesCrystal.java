@@ -3,12 +3,14 @@ package fr.iglee42.techresourcecrystal;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import fr.iglee42.techresourcecrystal.customize.Crystal;
+import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
 import fr.iglee42.techresourcecrystal.customize.DataGeneratorFactory;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.customize.custompack.PackType;
 import fr.iglee42.techresourcecrystal.customize.custompack.TRCPackFinder;
 import fr.iglee42.techresourcecrystal.customize.datageneration.*;
 import fr.iglee42.techresourcecrystal.init.*;
+import fr.iglee42.techresourcecrystal.jei.CrystalsJEIPlugin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.server.packs.repository.PackRepository;
@@ -56,6 +58,7 @@ public class TechResourcesCrystal {
         ModBlockEntity.BLOCK_ENTITIES.register(bus);
         ModSounds.REGISTER.register(bus);
         ModEntityType.ENTITY_TYPES.register(bus);
+        CustomRecipes.SERIALIZER.register(bus);
         DataGeneratorFactory.init();
         prepareData();
 
@@ -73,7 +76,6 @@ public class TechResourcesCrystal {
             }
         } catch (Exception ignored) {
         }
-
 
     }
 

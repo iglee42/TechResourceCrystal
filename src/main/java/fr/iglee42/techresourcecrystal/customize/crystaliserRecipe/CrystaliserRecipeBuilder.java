@@ -12,71 +12,97 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.ItemLike;
 
-public class CrystaliserRecipeBuilder {
+public class CrystaliserRecipeBuilder implements RecipeBuilder {
    private final Ingredient block;
+   private final CustomJsonProperty[] properties;
    private final Item result;
+   private final int count;
    private final Advancement.Builder advancement = Advancement.Builder.advancement();
-   private final RecipeSerializer<?> type;
 
-   public CrystaliserRecipeBuilder(RecipeSerializer<?> p_126381_, Ingredient p_126382_,  Item p_126384_) {
-      this.type = p_126381_;
-      this.block = p_126382_;
-      
-      this.result = p_126384_;
+   public CrystaliserRecipeBuilder(Ingredient ingredient,  ItemLike result,int count,CustomJsonProperty... props) {
+      this.block = ingredient;
+      this.properties = props;
+      this.result = result.asItem();
+      this.count = count;
    }
 
-   public static CrystaliserRecipeBuilder smithing(Ingredient p_126386_,  Item p_126388_) {
-      return new CrystaliserRecipeBuilder(CustomRecipes.CRYSTALISER_SERIA, p_126386_, p_126388_);
-   }
 
-   public CrystaliserRecipeBuilder unlocks(String p_126390_, CriterionTriggerInstance p_126391_) {
-      this.advancement.addCriterion(p_126390_, p_126391_);
-      return this;
-   }
 
    public void save(Consumer<FinishedRecipe> p_126393_, String p_126394_) {
       this.save(p_126393_, new ResourceLocation(p_126394_));
    }
 
-   public void save(Consumer<FinishedRecipe> p_126396_, ResourceLocation p_126397_) {
-      this.ensureValid(p_126397_);
-      this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(p_126397_)).rewards(AdvancementRewards.Builder.recipe(p_126397_)).requirements(RequirementsStrategy.OR);
-      p_126396_.accept(new CrystaliserRecipeBuilder.Result(p_126397_, this.type, this.block, this.result, this.advancement, new ResourceLocation(p_126397_.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + p_126397_.getPath())));
+   @Override
+   public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
+      this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
+      return this;
    }
 
-   private void ensureValid(ResourceLocation p_126399_) {
-      if (this.advancement.getCriteria().isEmpty()) {
-         throw new IllegalStateException("No way of obtaining recipe " + p_126399_);
-      }
+   @Override
+   public RecipeBuilder group(@Nullable String pGroupName) {
+      return this;
+   }
+
+   @Override
+   public Item getResult() {
+      return result;
+   }
+
+   @Override
+   public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
+      this.advancement.parent(new ResourceLocation("recipes/root"))
+              .addCriterion("has_the_recipe",
+                      RecipeUnlockedTrigger.unlocked(pRecipeId))
+              .rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
+
+      pFinishedRecipeConsumer.accept(new CrystaliserRecipeBuilder.Result(pRecipeId, this.result, this.count, this.block,properties,
+              this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/"+ pRecipeId.getPath())));
+
    }
 
    public static class Result implements FinishedRecipe {
       private final ResourceLocation id;
-      private final Ingredient block;
       private final Item result;
+      private final Ingredient ingredient;
+      private final CustomJsonProperty[] properties;
+      private final int count;
       private final Advancement.Builder advancement;
       private final ResourceLocation advancementId;
-      private final RecipeSerializer<?> type;
 
-      public Result(ResourceLocation p_126408_, RecipeSerializer<?> p_126409_, Ingredient p_126410_, Item p_126412_, Advancement.Builder p_126413_, ResourceLocation p_126414_) {
-         this.id = p_126408_;
-         this.type = p_126409_;
-         this.block = p_126410_;
-         this.result = p_126412_;
-         this.advancement = p_126413_;
-         this.advancementId = p_126414_;
+      public Result(ResourceLocation pId, Item pResult, int pCount, Ingredient ingredient,CustomJsonProperty[] props ,Advancement.Builder pAdvancement,
+                    ResourceLocation pAdvancementId) {
+         this.id = pId;
+         this.result = pResult;
+         this.count = pCount;
+         this.ingredient = ingredient;
+         this.properties = props;
+         this.advancement = pAdvancement;
+         this.advancementId = pAdvancementId;
       }
 
-      public void serializeRecipeData(JsonObject p_126416_) {
-         p_126416_.add("block", this.block.toJson());
-         JsonObject jsonobject = new JsonObject();
-         jsonobject.addProperty("item", Registry.ITEM.getKey(this.result).toString());
-         p_126416_.add("result", jsonobject);
+      public void serializeRecipeData(JsonObject end) {
+         end.addProperty("block", this.ingredient.getItems()[0].getItem().getRegistryName().toString());
+         if (this.properties != null && this.properties.length > 0){
+            JsonObject properties = new JsonObject();
+            for (CustomJsonProperty property : this.properties) {
+               properties.add(property.name(), property.value());
+            }
+            end.add("properties",properties);
+         }
+         JsonObject result = new JsonObject();
+         result.addProperty("item", Registry.ITEM.getKey(this.result).toString());
+         if (this.count > 1) {
+            result.addProperty("count", this.count);
+         }
+         end.add("result", result);
+
       }
 
       public ResourceLocation getId() {
@@ -84,7 +110,7 @@ public class CrystaliserRecipeBuilder {
       }
 
       public RecipeSerializer<?> getType() {
-         return this.type;
+         return CustomRecipes.CRYSTALISER_SERIA.get();
       }
 
       @Nullable

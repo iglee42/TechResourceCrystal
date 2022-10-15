@@ -8,6 +8,7 @@ import fr.iglee42.techresourcecrystal.init.ModItem;
 import fr.iglee42.techresourcesbase.utils.JsonHelper;
 import fr.iglee42.techresourcesbase.utils.ModsUtils;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -42,10 +43,10 @@ public class TypesConstants {
     }
 
     private static void readAllFiles() {
-        TYPES.add(new Crystal("water", EntityType.GUARDIAN,true,true,true,true,true,true));
-        TYPES.add(new Crystal("fire", EntityType.BLAZE,true,true,true,true,true,true));
-        TYPES.add(new Crystal("earth", EntityType.CREEPER,true,true,true,true,true,true));
-        TYPES.add(new Crystal("air", EntityType.PHANTOM,true,true,true,true,true,true));
+        TYPES.add(new Crystal("water", EntityType.GUARDIAN, Items.AMETHYST_BLOCK,true,true,true,true,true,true));
+        TYPES.add(new Crystal("fire", EntityType.BLAZE,Items.AMETHYST_BLOCK,true,true,true,true,true,true));
+        TYPES.add(new Crystal("earth", EntityType.CREEPER,Items.AMETHYST_BLOCK,true,true,true,true,true,true));
+        TYPES.add(new Crystal("air", EntityType.PHANTOM,Items.AMETHYST_BLOCK,true,true,true,true,true,true));
 
         File dir = FMLPaths.CONFIGDIR.get().resolve("techresourcescrystal/crystals/").toFile();
         if (!dir.exists() && dir.mkdirs()){
@@ -66,7 +67,7 @@ public class TypesConstants {
                     reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
                     json = parser.parse(reader).getAsJsonObject();
                     if (json.get("name").getAsString().isEmpty()) throw new NullPointerException("The name can't be empty ! (" + file.getName() + ")" );
-                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityType(json,"entity"), JsonHelper.getBoolean(json,"hasPlateRecipe"),JsonHelper.getBoolean(json,"hasCrystaliserRecipe"),JsonHelper.getBoolean(json,"hasMobRecipe"),JsonHelper.getBoolean(json,"dropFragmented"),JsonHelper.getBoolean(json,"hasCoreRecipe"),false));
+                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityType(json,"entity"), JsonHelper.getItem(json,"mobItem"), JsonHelper.getBoolean(json,"hasPlateRecipe"),JsonHelper.getBoolean(json,"hasCrystaliserRecipe"),JsonHelper.getBoolean(json,"hasMobRecipe"),JsonHelper.getBoolean(json,"dropFragmented"),JsonHelper.getBoolean(json,"hasCoreRecipe"),false));
                     reader.close();
                 } catch (Exception e) {
                     TechResourcesCrystal.LOGGER.error("An error occurred while loading minerals", e);

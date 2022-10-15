@@ -2,11 +2,6 @@ package fr.iglee42.techresourcecrystal.block;
 
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.block.entity.CrystaliserBlockEntity;
-import fr.iglee42.techresourcecrystal.customize.Crystal;
-import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
-import fr.iglee42.techresourcecrystal.customize.TypesConstants;
-import fr.iglee42.techresourcecrystal.init.ModBlock;
-import fr.iglee42.techresourcecrystal.init.ModBlockEntity;
 import fr.iglee42.techresourcecrystal.init.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -40,24 +34,23 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class BlockCrystaliser extends BaseEntityBlock {
 
-    public static final BooleanProperty RIGHT =  BooleanProperty.create("right");
-    public static final BooleanProperty LEFT =  BooleanProperty.create("left");
-    public static final BooleanProperty WATER =  BooleanProperty.create("water");
-    public static final BooleanProperty AIR =  BooleanProperty.create("air");
-    public static final BooleanProperty FIRE =  BooleanProperty.create("fire");
-    public static final BooleanProperty EARTH =  BooleanProperty.create("earth");
-    public static final BooleanProperty MOLD =  BooleanProperty.create("mold");
+    public static final BooleanProperty RIGHT = BooleanProperty.create("right");
+    public static final BooleanProperty LEFT = BooleanProperty.create("left");
+    public static final BooleanProperty WATER = BooleanProperty.create("water");
+    public static final BooleanProperty AIR = BooleanProperty.create("air");
+    public static final BooleanProperty FIRE = BooleanProperty.create("fire");
+    public static final BooleanProperty EARTH = BooleanProperty.create("earth");
+    public static final BooleanProperty MOLD = BooleanProperty.create("mold");
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public Timer timer;
 
     public BlockCrystaliser() {
         super(Properties.of(Material.HEAVY_METAL).noOcclusion());
-        this.registerDefaultState(this.defaultBlockState().setValue(MOLD,false).setValue(RIGHT,false).setValue(LEFT,false).setValue(WATER,false).setValue(AIR,false).setValue(FIRE,false).setValue(EARTH,false));
+        this.registerDefaultState(this.defaultBlockState().setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false).setValue(WATER, false).setValue(AIR, false).setValue(FIRE, false).setValue(EARTH, false));
     }
 
 
@@ -70,54 +63,66 @@ public class BlockCrystaliser extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult){
-        if (player.getMainHandItem().getItem() != Items.AIR){
-            if (player.getMainHandItem().getItem() == ModItem.CRYSTALISER_MOLD.get()){
-                if (!state.getValue(MOLD)){
-                    level.setBlock(pos,state.setValue(MOLD, true),0);
-                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
-                    return InteractionResult.CONSUME;
-                }
-            } else if (player.getMainHandItem().getItem() == Items.LAVA_BUCKET){
-                if (!state.getValue(LEFT)){
-                    level.setBlock(pos,state.setValue(LEFT, true),0);
-                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
-                    if (!player.isCreative())player.addItem(new ItemStack(Items.BUCKET));
-                    return InteractionResult.CONSUME;
-                } else if (!state.getValue(RIGHT) && state.getValue(LEFT)){
-                    level.setBlock(pos,state.setValue(RIGHT, true),0);
-                    if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
-                    if (!player.isCreative())player.addItem(new ItemStack(Items.BUCKET));
-                    return InteractionResult.CONSUME;
-                }
-            } else if (player.getMainHandItem().getItem() == Items.BUCKET){
-                if (!(state.getValue(WATER) || state.getValue(AIR) || state.getValue(FIRE) || state.getValue(EARTH))){
-                    if (state.getValue(RIGHT)){
-                        level.setBlock(pos,state.setValue(RIGHT, false),0);
-                        if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
-                        if (!player.isCreative())player.addItem(new ItemStack(Items.LAVA_BUCKET));
-                        return InteractionResult.CONSUME;
-                    } else if (!state.getValue(RIGHT) && state.getValue(LEFT)){
-                        level.setBlock(pos,state.setValue(LEFT, false),0);
-                        if (!player.isCreative())player.getMainHandItem().setCount(player.getMainHandItem().getCount() -1);
-                        if (!player.isCreative())player.addItem(new ItemStack(Items.LAVA_BUCKET));
-                        return InteractionResult.CONSUME;
-                    }
-                } else {
-                    player.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"),true);
-                }
-            }
-        }else {
-            if (player.isCrouching()){
-                if (!(state.getValue(WATER) || state.getValue(AIR) || state.getValue(FIRE) || state.getValue(EARTH))){
-                    if (state.getValue(MOLD)) {
-                        level.setBlock(pos, state.setValue(MOLD, false), 0);
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof CrystaliserBlockEntity tile) {
+            if (player.getMainHandItem().getItem() != Items.AIR) {
+                if (player.getMainHandItem().getItem() == ModItem.CRYSTALISER_MOLD.get()) {
+                    if (!state.getValue(MOLD)) {
+                        level.setBlock(pos, state.setValue(MOLD, true), 0);
                         if (!player.isCreative())
-                            player.addItem(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
+                            player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
                         return InteractionResult.CONSUME;
                     }
+                } else if (player.getMainHandItem().getItem() == Items.LAVA_BUCKET) {
+                    if (!state.getValue(LEFT)) {
+                        level.setBlock(pos, state.setValue(LEFT, true), 0);
+                        if (!player.isCreative())
+                            player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+                        if (!player.isCreative()) player.addItem(new ItemStack(Items.BUCKET));
+                        return InteractionResult.CONSUME;
+                    } else if (!state.getValue(RIGHT) && state.getValue(LEFT)) {
+                        level.setBlock(pos, state.setValue(RIGHT, true), 0);
+                        if (!player.isCreative())
+                            player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+                        if (!player.isCreative()) player.addItem(new ItemStack(Items.BUCKET));
+                        return InteractionResult.CONSUME;
+                    }
+                } else if (player.getMainHandItem().getItem() == Items.BUCKET) {
+                    if (!tile.isStart()) {
+                        if (state.getValue(RIGHT)) {
+                            level.setBlock(pos, state.setValue(RIGHT, false), 0);
+                            if (!player.isCreative())
+                                player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+                            if (!player.isCreative()) player.addItem(new ItemStack(Items.LAVA_BUCKET));
+                            return InteractionResult.CONSUME;
+                        } else if (!state.getValue(RIGHT) && state.getValue(LEFT)) {
+                            level.setBlock(pos, state.setValue(LEFT, false), 0);
+                            if (!player.isCreative())
+                                player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+                            if (!player.isCreative()) player.addItem(new ItemStack(Items.LAVA_BUCKET));
+                            return InteractionResult.CONSUME;
+                        }
+                    } else {
+                        player.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"), true);
+                    }
+                }
+            } else {
+                if (player.isCrouching()) {
+                    if (!tile.isStart()) {
+                        if (state.getValue(MOLD)) {
+                            level.setBlock(pos, state.setValue(MOLD, false), 0);
+                            if (!player.isCreative())
+                                player.addItem(new ItemStack(ModItem.CRYSTALISER_MOLD.get()));
+                            return InteractionResult.CONSUME;
+                        }
+                    } else {
+                        player.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"), true);
+                    }
                 } else {
-                    player.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"),true);
+                    if (tile.isStart()) {
+                        player.displayClientMessage(new TextComponent(Integer.toString(30 - tile.getStartSecond())), true);
+                    }
                 }
             }
         }
@@ -125,13 +130,12 @@ public class BlockCrystaliser extends BaseEntityBlock {
 
         return InteractionResult.PASS;
     }
-    
-    
+
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
-        return super.getStateForPlacement(p_196258_1_).setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite()).setValue(MOLD,false).setValue(RIGHT,false).setValue(LEFT,false).setValue(WATER,false).setValue(AIR,false).setValue(FIRE,false).setValue(EARTH,false);
+        return super.getStateForPlacement(p_196258_1_).setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite()).setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false).setValue(WATER, false).setValue(AIR, false).setValue(FIRE, false).setValue(EARTH, false);
     }
 
     @Override
@@ -159,6 +163,7 @@ public class BlockCrystaliser extends BaseEntityBlock {
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @org.jetbrains.annotations.Nullable Direction direction) {
         return !state.getValue(WATER) && !state.getValue(AIR) && !state.getValue(FIRE) && !state.getValue(EARTH);
     }
+
     private boolean redstoneIsActivated(Level world, BlockPos pos) {
         if (world.hasNeighborSignal(pos)) {
             return true;
@@ -168,20 +173,18 @@ public class BlockCrystaliser extends BaseEntityBlock {
 
     @Override
     public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pPos1, boolean p_60514_) {
-        if (redstoneIsActivated(pLevel,pPos)){
-            BlockPos newPos = pPos.offset(0,-1,0);
-            if (pLevel.getBlockEntity(pPos) instanceof CrystaliserBlockEntity){
+        if (redstoneIsActivated(pLevel, pPos)) {
+            BlockPos newPos = pPos.offset(0, -1, 0);
+            if (pLevel.getBlockEntity(pPos) instanceof CrystaliserBlockEntity tile) {
                 //Crystal type = TypesConstants.getType(((CustomFragmentedCore)pLevel.getBlockState(newPos).getBlock()).getType());
-                //((CrystaliserBlockEntity)pLevel.getBlockEntity(pPos)).setBlock(pLevel.getBlockState(pPos).getBlock());
-               //pLevel.destroyBlock(newPos,false);
-                pLevel.getRecipeManager().getAllRecipesFor(CustomRecipes.CRYSTALISER).stream().filter(r->Block.byItem(r.getIngredients().get(0).getItems()[0].getItem()).equals(pLevel.getBlockState(newPos).getBlock())).findFirst().ifPresent(r->((CrystaliserBlockEntity)pLevel.getBlockEntity(pPos)).setRecipeUsed(r));
-                pLevel.destroyBlock(newPos,false);
+                if (!tile.isStart()) tile.setBlock(pLevel.getBlockState(newPos),pLevel,newPos);
+                //pLevel.destroyBlock(newPos,false);
             }
         }
     }
 
     private boolean checkNeeded(BlockState bs) {
-        return bs.getValue(RIGHT) &&bs.getValue(LEFT) &&bs.getValue(MOLD);
+        return bs.getValue(RIGHT) && bs.getValue(LEFT) && bs.getValue(MOLD);
     }
 
     @Override
@@ -196,11 +199,19 @@ public class BlockCrystaliser extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new CrystaliserBlockEntity(p_153215_,p_153216_);
+        return new CrystaliserBlockEntity(p_153215_, p_153216_);
     }
 
+    @org.jetbrains.annotations.Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return createTickerHelper(p_153214_,ModBlockEntity.CRYSTALISER.get(),CrystaliserBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        if (level.isClientSide()) {
+            return null;
+        }
+        return (lvl, pos, state, t) -> {
+            if (t instanceof CrystaliserBlockEntity tile) {
+                tile.tick(lvl, pos, state);
+            }
+        };
     }
 }

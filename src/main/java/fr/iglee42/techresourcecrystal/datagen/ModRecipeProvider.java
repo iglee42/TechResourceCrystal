@@ -22,7 +22,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> p_176532_) {
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModItem.AIR_CRYSTAL.get()),ModItem.AIR_CRYSTAL_PLATE.get(),4)
+        /*SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModItem.AIR_CRYSTAL.get()),ModItem.AIR_CRYSTAL_PLATE.get(),4)
                 .save(p_176532_);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModItem.WATER_CRYSTAL.get()),ModItem.WATER_CRYSTAL_PLATE.get(),4)
                 .save(p_176532_);
@@ -49,5 +49,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.BUCKET)
                 .unlockedBy("has_items", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT,Items.GLASS,Items.BUCKET))
                 .save(p_176532_);
+
+         */
     }
 }

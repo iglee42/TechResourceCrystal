@@ -7,7 +7,7 @@
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_base",
         "y": 270,
-        "uvlock": true
+        "uvlock": false
       }
     },
     {
@@ -17,7 +17,7 @@
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_base",
         "y": 90,
-        "uvlock": true
+        "uvlock": false
       }
     },
     {
@@ -27,7 +27,7 @@
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_base",
         "y": 180,
-        "uvlock": true
+        "uvlock": false
       }
     },
     {
@@ -40,124 +40,51 @@
     },{
       "when": {
         "right": false,
-		   "facing": "north"
+		 "facing": "north"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 0
       }
     },{
       "when": {
         "right": true,
-		   "facing": "north"
+		 "facing": "north"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_full",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 0
       }
     },{
       "when": {
         "left": false,
-		   "facing": "north"
+		 "facing": "north"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 0
       }
     },{
       "when": {
         "left": true,
-		   "facing": "north"
+		 "facing": "north"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_full",
-        "uvlock": true,
+        "uvlock": false,
         "y": 0
       }
     },{
       "when": {
         "mold": true,
-		   "facing": "north"
+		 "facing": "north"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "water": false,
-        "air": false,
-        "fire": false,
-        "earth": false,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_empty",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "water": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_water",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "air": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_air",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "fire": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_fire",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "earth": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_earth",
-        "uvlock": true,
-        "y": 0
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "north"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 0
       }
     },{
@@ -167,7 +94,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 180
       }
     },{
@@ -177,17 +104,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_full",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 180
       }
     },{
@@ -197,7 +114,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 180
       }
     },{
@@ -207,7 +124,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_full",
-        "uvlock": true,
+        "uvlock": false,
         "y": 180
       }
     },{
@@ -217,70 +134,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "water": false,
-        "air": false,
-        "fire": false,
-        "earth": false,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_empty",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "water": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_water",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "air": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_air",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "fire": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_fire",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "earth": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_earth",
-        "uvlock": true,
-        "y": 180
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "south"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 180
       }
     },{
@@ -290,7 +144,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 270
       }
     },{
@@ -300,27 +154,17 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_full",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 270
       }
     },{
       "when": {
         "left": false,
-		   "facing": "west"
+		"facing": "west"
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 270
       }
     },{
@@ -330,7 +174,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_full",
-        "uvlock": true,
+        "uvlock": false,
         "y": 270
       }
     },{
@@ -340,70 +184,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "water": false,
-        "air": false,
-        "fire": false,
-        "earth": false,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_empty",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "water": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_water",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "air": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_air",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "fire": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_fire",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "earth": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_earth",
-        "uvlock": true,
-        "y": 270
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "west"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 270
       }
     },{
@@ -413,7 +194,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 90
       }
     },{
@@ -423,17 +204,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_right_tank_full",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 90
       }
     },{
@@ -443,7 +214,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_empty",
-        "uvlock": true,
+        "uvlock": false,
         "y": 90
       }
     },{
@@ -453,7 +224,7 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_left_tank_full",
-        "uvlock": true,
+        "uvlock": false,
         "y": 90
       }
     },{
@@ -463,72 +234,8 @@
       },
       "apply": {
         "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
+        "uvlock": false,
         "y": 90
       }
-    },{
-      "when": {
-        "water": false,
-        "air": false,
-        "fire": false,
-        "earth": false,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_empty",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "water": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_water",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "air": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_air",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "fire": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_fire",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "earth": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_back_tank_full_earth",
-        "uvlock": true,
-        "y": 90
-      }
-    },{
-      "when": {
-        "mold": true,
-		   "facing": "east"
-      },
-      "apply": {
-        "model": "techresourcescrystal:block/crystaliser_mold",
-        "uvlock": true,
-        "y": 90
-      }
-    }
-  ]
+    }]
 }

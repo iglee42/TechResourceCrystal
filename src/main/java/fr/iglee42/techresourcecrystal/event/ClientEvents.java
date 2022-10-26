@@ -24,10 +24,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void clientStuff(final FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(ModBlock.FRAGMENTED_WATER_CRYSTAL_CORE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlock.FRAGMENTED_AIR_CRYSTAL_CORE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlock.FRAGMENTED_FIRE_CRYSTAL_CORE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlock.FRAGMENTED_EARTH_CRYSTAL_CORE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlock.CRYSTALISER.get(), RenderType.cutoutMipped());
 
         Minecraft.getInstance().getItemColors().register(ClientEvents::getTint, ModItem.CAPTURE_STONE.get());

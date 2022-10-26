@@ -4,6 +4,7 @@ import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.customize.crystaliserRecipe.CrystaliserRecipe;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
+import fr.iglee42.techresourcecrystal.theoneprobe.TOPIMC;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
@@ -19,14 +20,34 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static fr.iglee42.techresourcecrystal.TechResourcesCrystal.isTOPLoaded;
+
 @Mod.EventBusSubscriber(modid = TechResourcesCrystal.MODID)
 public class CommonEvents {
 
+    @Mod.EventBusSubscriber(modid = TechResourcesCrystal.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public class ModBus {
+        @SubscribeEvent
+        public static void interComs(InterModEnqueueEvent event){
+            if (isTOPLoaded){
+                InterModComms.sendTo("theoneprobe", "getTheOneProbe", TOPIMC::new);
+            }
+
+        }
+        @SubscribeEvent
+        public static void setup(final FMLCommonSetupEvent event) {
+            isTOPLoaded = ModList.get().isLoaded("theoneprobe");
+        }
+    }
     @SubscribeEvent
     public static void registerRecipeTypes(final RegistryEvent.Register<RecipeSerializer<?>> event) {
         Registry.register(Registry.RECIPE_TYPE, CrystaliserRecipe.Type.ID, CrystaliserRecipe.Type.INSTANCE);

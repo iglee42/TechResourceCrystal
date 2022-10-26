@@ -9,6 +9,7 @@ import fr.iglee42.techresourcesbase.utils.JsonHelper;
 import fr.iglee42.techresourcesbase.utils.ModsUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
@@ -67,7 +68,7 @@ public class TypesConstants {
                     reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
                     json = parser.parse(reader).getAsJsonObject();
                     if (json.get("name").getAsString().isEmpty()) throw new NullPointerException("The name can't be empty ! (" + file.getName() + ")" );
-                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityType(json,"entity"), JsonHelper.getItem(json,"mobItem"), JsonHelper.getBoolean(json,"hasPlateRecipe"),JsonHelper.getBoolean(json,"hasCrystaliserRecipe"),JsonHelper.getBoolean(json,"hasMobRecipe"),JsonHelper.getBoolean(json,"dropFragmented"),JsonHelper.getBoolean(json,"hasCoreRecipe"),false));
+                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityTypeOrDefault(json,"entity",EntityType.PIG), JsonHelper.getItemOrDefault(json,"mobItem", Blocks.AMETHYST_BLOCK.asItem()), JsonHelper.getBooleanOrDefault(json,"hasPlateRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasCrystaliserRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasMobRecipe",true),JsonHelper.getBooleanOrDefault(json,"dropFragmented",true),JsonHelper.getBooleanOrDefault(json,"hasCoreRecipe",true),false));
                     reader.close();
                 } catch (Exception e) {
                     TechResourcesCrystal.LOGGER.error("An error occurred while loading minerals", e);

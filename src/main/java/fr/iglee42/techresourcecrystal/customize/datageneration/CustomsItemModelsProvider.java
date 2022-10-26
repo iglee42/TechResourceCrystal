@@ -54,7 +54,7 @@ public class CustomsItemModelsProvider extends ItemModelProvider {
 
     private ItemModelBuilder plate(String name){
         return withExistingParent(name+"_plate",
-                new ResourceLocation("item/generated")).texture("layer_0",new ResourceLocation(
+                new ResourceLocation("item/generated")).texture("layer0",new ResourceLocation(
                 TechResourcesCrystal.MODID,name+"/plate"));
     }
 

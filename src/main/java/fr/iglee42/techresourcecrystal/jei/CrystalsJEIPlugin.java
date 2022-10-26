@@ -53,7 +53,7 @@ public class CrystalsJEIPlugin implements IModPlugin {
                         .collect(Collectors.toList()));
 
 
-        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,new TextComponent("\nYou must place it above a block"),new TextComponent("\n\nYou need to fill the crystaliser with 2 lava buckets and add a crystaliser mold"),new TextComponent("\n\nWhen you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystallization.\nThe crystallization take 30 seconds."));
+        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,new TextComponent("\nWhen you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystalization.\nThe crystalization take 30 seconds."));
         List<ItemStack> cores = new ArrayList<>();
         TypesConstants.TYPES.forEach(c->{
             cores.add(new ItemStack(ModBlock.getCrystalCore(c.name())));

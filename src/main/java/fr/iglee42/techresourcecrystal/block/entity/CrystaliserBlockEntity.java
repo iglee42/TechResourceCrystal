@@ -9,9 +9,15 @@ import fr.iglee42.techresourcecrystal.init.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,15 +31,35 @@ import java.util.*;
 
 public class CrystaliserBlockEntity extends BlockEntity {
 
-    private int tick, tickSecond, crystalSecond, startSecond;
+    private int tick, tickSecond, crystalSecond, startSecond,startTick;
     private Container c = new SimpleContainer(1);
     private Level lastLevel;
     private BlockState lastState;
+    private BlockPos lastPos;
     private boolean start;
+    private CrystaliserRecipe currentRecipe;
     private BlockState stockedBlock;
+    private ArmorStand missingStand;
+    private ArmorStand timeStand;
 
     public CrystaliserBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntity.CRYSTALISER.get(), pos, state);
+    }
+
+    public void initStands(Level lvl,BlockPos pos) {
+        missingStand = new ArmorStand(lvl,pos.getX() +0.5,pos.getY() - 1,pos.getZ()+0.5);
+        timeStand = new ArmorStand(lvl,pos.getX()+0.5,pos.getY() - 0.8,pos.getZ()+0.5);
+        missingStand.setNoGravity(true);
+        timeStand.setNoGravity(true);
+        missingStand.setInvisible(true);
+        timeStand.setInvisible(true);
+        missingStand.noCulling = true;
+        timeStand.noCulling = true;
+        missingStand.blocksBuilding = false;
+        timeStand.blocksBuilding = false;
+        lvl.addFreshEntity(missingStand);
+        lvl.addFreshEntity(timeStand);
+
     }
 
     public void tick(Level lvl, BlockPos pos, BlockState state) {
@@ -42,7 +68,18 @@ public class CrystaliserBlockEntity extends BlockEntity {
             tickSecond += 1;
             startSecond += 1;
         }
+        if (missingStand == null) initStands(lvl,pos);
+        missingStand.setCustomNameVisible(missingStand.getCustomName() != null && !missingStand.getCustomName().getString().equals("Armor Stand"));
+        lastLevel = lvl;
+        lastState = state;
+        lastPos = pos;
+        startTick += 1;
         tick += 1;
+        BlockPos upPos = pos.offset(0,1,0);
+        if (!lvl.getBlockState(upPos).isAir()) {
+            deleteStands();
+        }
+
 
         if (tickSecond == 1) {
             second(lvl, pos, state);
@@ -50,17 +87,37 @@ public class CrystaliserBlockEntity extends BlockEntity {
         }
     }
 
+    public void deleteStands(){
+        if (missingStand != null) {
+            this.missingStand.remove(Entity.RemovalReason.KILLED);}
+        if (timeStand != null ){
+            this.timeStand.remove(Entity.RemovalReason.KILLED);
+        }
+        this.missingStand = null;
+        this.timeStand = null;
+
+    }
+    public void breakBlock(Level level, BlockPos pos){
+        this.deleteStands();
+        if (this.start)this.level.setBlockAndUpdate(pos.offset(0,-1,0),this.stockedBlock);
+    }
+
     private void second(Level pLevel, BlockPos pPos, BlockState pState) {
         CrystaliserRecipe recipe = pLevel
                 .getRecipeManager()
                 .getAllRecipesFor(CrystaliserRecipe.Type.INSTANCE)
                 .stream()
-                .filter(this::testBlock)
+                .filter(r -> CrystaliserBlockEntity.testBlock(r,this.stockedBlock))
                 .findFirst()
                 .orElse(null);
+        currentRecipe = recipe;
         start = testStart(pState, recipe);
+        if (missingStand == null) initStands(pLevel,pPos);
         if (start) {
             crystalSecond += 1;
+            missingStand.setCustomName(new TextComponent("Recipe : ").append(new TranslatableComponent(recipe.getResultItem().getDescriptionId())));
+            timeStand.setCustomName(new TextComponent("Remaining Time : " + (30 - crystalSecond)));
+            timeStand.setCustomNameVisible(true);
             if (crystalSecond == 30) {
                 crystalSecond = 0;
                 BlockState emptyState = pState;
@@ -70,22 +127,50 @@ public class CrystaliserBlockEntity extends BlockEntity {
                 //c.setItem(0,new ItemStack(Blocks.AIR));
                 this.stockedBlock = null;
             }
+        } else {
+            timeStand.setCustomNameVisible(false);
+            if (pState.getValue(BlockCrystaliser.LEFT) && pState.getValue(BlockCrystaliser.RIGHT) && pState.getValue(BlockCrystaliser.MOLD)) {
+                if (level.getBlockState(pPos.offset(0,-1,0)).isAir()){
+                    missingStand.setCustomName(new TextComponent("Waiting a block under"));
+                } else {
+                    if (pLevel.getRecipeManager().getAllRecipesFor(CrystaliserRecipe.Type.INSTANCE).stream().noneMatch(r -> CrystaliserBlockEntity.testBlock(r,level.getBlockState(pPos.offset(0,-1,0))))){
+                        missingStand.setCustomName(new TextComponent("The block under is invalid"));
+                    } else {
+                        missingStand.setCustomName(new TextComponent("Waiting a redstone signal"));
+                    }
+                }
+            } else {
+                String missing = "Missing : ";
+                int missLava = 0;
+                if (!pState.getValue(BlockCrystaliser.LEFT)){
+                    missLava += 1;
+                }
+                if (!pState.getValue(BlockCrystaliser.RIGHT)){
+                    missLava += 1;
+                }
+                if (!pState.getValue(BlockCrystaliser.MOLD)){
+                    missing = missing + "Mold" + (missLava > 0 ? " & " : "");
+                }
+                missing = missing + (missLava == 1 ? "1 Lava Bucket" : missLava == 2 ? "2 Lava Buckets" : "");
+                missingStand.setCustomName(new TextComponent(missing));
+            }
         }
+
     }
 
-    private boolean testBlock(CrystaliserRecipe r) {
+    public static boolean testBlock(CrystaliserRecipe r,BlockState stockedBlock) {
         if (stockedBlock == null) return false;
         boolean flag = Arrays.stream(r.getIngredient().getItems()).anyMatch(s -> s.getItem() == stockedBlock.getBlock().asItem());
         boolean flag1 = false;
         try {
-            flag1 = hasAllAskedProperties(r);
+            flag1 = hasAllAskedProperties(r,stockedBlock);
         } catch (UnknowPropertyException e) {
             e.printStackTrace();
         }
         return flag && flag1;
     }
 
-    private boolean hasAllAskedProperties(CrystaliserRecipe r) throws UnknowPropertyException {
+    private static boolean hasAllAskedProperties(CrystaliserRecipe r,BlockState stockedBlock) throws UnknowPropertyException {
         HashMap<String, JsonPrimitive> recipeProps = new HashMap<String, JsonPrimitive>(r.getRequiredProperties());
         if (recipeProps.isEmpty()) return true;
         for (Property<?> prop : stockedBlock.getProperties()) {
@@ -136,6 +221,9 @@ public class CrystaliserBlockEntity extends BlockEntity {
         tag.putInt("tickSecond", tickSecond);
         tag.putInt("crystalSecond", crystalSecond);
         tag.putInt("startSecond", startSecond);
+        tag.put("missingStand", missingStand.serializeNBT());
+        tag.put("timeStand", timeStand.serializeNBT());
+        deleteStands();
         try {
             if (stockedBlock != null)saveProps(tag);//tag.putString("block",stockedBlock.getBlock().getRegistryName().toString());
         } catch (PropertyTypeNotSupportedException e) {
@@ -168,7 +256,7 @@ public class CrystaliserBlockEntity extends BlockEntity {
         tag.put("properties",props);
     }
 
-    private int getPropType(Property<?> prop) {
+    private static int getPropType(Property<?> prop) {
         String[] typeNameTab = prop.getValueClass().getTypeName().split("\\.");
         String typeName = typeNameTab[typeNameTab.length-1];
         if (prop.getValueClass().isEnum()) return 2;
@@ -185,6 +273,12 @@ public class CrystaliserBlockEntity extends BlockEntity {
         this.tickSecond = tag.getInt("tickSecond");
         this.crystalSecond = tag.getInt("crystalSecond");
         this.startSecond = tag.getInt("startSecond");
+        this.missingStand = EntityType.ARMOR_STAND.create(this.lastLevel);
+        this.missingStand.load((CompoundTag) tag.get("missingStand"));
+        this.timeStand = EntityType.ARMOR_STAND.create(this.lastLevel);
+        this.timeStand.load((CompoundTag) tag.get("timeStand"));
+        this.level.addFreshEntity(this.missingStand);
+        this.level.addFreshEntity(this.timeStand);
         try {
             loadProps(tag);
         } catch (PropertyTypeNotSupportedException e) {
@@ -219,7 +313,7 @@ public class CrystaliserBlockEntity extends BlockEntity {
     public void setBlock(BlockState block, Level pLevel, BlockPos pPos) {
         if (block.getBlock() == Blocks.AIR) return;
         this.stockedBlock = block;
-        if (pLevel.getRecipeManager().getAllRecipesFor(CrystaliserRecipe.Type.INSTANCE).stream().noneMatch(this::testBlock)){
+        if (pLevel.getRecipeManager().getAllRecipesFor(CrystaliserRecipe.Type.INSTANCE).stream().noneMatch(r ->  CrystaliserBlockEntity.testBlock(r,block))){
             this.stockedBlock = null;
             return;
         }
@@ -233,5 +327,9 @@ public class CrystaliserBlockEntity extends BlockEntity {
 
     public int getStartSecond() {
         return crystalSecond;
+    }
+
+    public CrystaliserRecipe getCurrentRecipe() {
+        return currentRecipe;
     }
 }

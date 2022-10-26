@@ -3,7 +3,12 @@ package fr.iglee42.techresourcecrystal.block;
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoProvider;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +18,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -28,7 +34,7 @@ public class CustomFragmentedCore extends Block {
     public static final IntegerProperty CRYSTAL = IntegerProperty.create("crystal",0,3);
     private String type = "water";
     public CustomFragmentedCore(String type) {
-        super(Properties.of(Material.ICE_SOLID).strength(10.5F, 3600000.0F).noOcclusion());
+        super(Properties.of(Material.ICE_SOLID).strength(10.5F, 3600000.0F).noOcclusion().sound(SoundType.AMETHYST));
         this.registerDefaultState(this.defaultBlockState().setValue(CRYSTAL,0));
         this.type = type;
     }
@@ -74,4 +80,6 @@ public class CustomFragmentedCore extends Block {
     public String getType() {
         return type;
     }
+
+
 }

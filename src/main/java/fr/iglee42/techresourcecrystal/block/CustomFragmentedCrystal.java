@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -23,7 +24,7 @@ public class CustomFragmentedCrystal extends Block {
     private String type = "water";
 
     public CustomFragmentedCrystal(String type) {
-        super(Properties.of(Material.ICE_SOLID).strength(1.5f));
+        super(Properties.of(Material.ICE_SOLID).strength(1.5f).sound(SoundType.AMETHYST));
         this.type = type;
     }
 

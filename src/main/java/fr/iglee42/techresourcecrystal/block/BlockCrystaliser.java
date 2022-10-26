@@ -39,18 +39,14 @@ public class BlockCrystaliser extends BaseEntityBlock {
 
     public static final BooleanProperty RIGHT = BooleanProperty.create("right");
     public static final BooleanProperty LEFT = BooleanProperty.create("left");
-    public static final BooleanProperty WATER = BooleanProperty.create("water");
-    public static final BooleanProperty AIR = BooleanProperty.create("air");
-    public static final BooleanProperty FIRE = BooleanProperty.create("fire");
-    public static final BooleanProperty EARTH = BooleanProperty.create("earth");
     public static final BooleanProperty MOLD = BooleanProperty.create("mold");
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public Timer timer;
 
     public BlockCrystaliser() {
-        super(Properties.of(Material.HEAVY_METAL).noOcclusion());
-        this.registerDefaultState(this.defaultBlockState().setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false).setValue(WATER, false).setValue(AIR, false).setValue(FIRE, false).setValue(EARTH, false));
+        super(Properties.of(Material.HEAVY_METAL).noOcclusion().strength(1.5f));
+        this.registerDefaultState(this.defaultBlockState().setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false));
     }
 
 
@@ -119,10 +115,6 @@ public class BlockCrystaliser extends BaseEntityBlock {
                     } else {
                         player.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"), true);
                     }
-                } else {
-                    if (tile.isStart()) {
-                        player.displayClientMessage(new TextComponent(Integer.toString(30 - tile.getStartSecond())), true);
-                    }
                 }
             }
         }
@@ -132,36 +124,34 @@ public class BlockCrystaliser extends BaseEntityBlock {
     }
 
 
+    @Override
+    public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
+        if (p_60516_.getBlockEntity(p_60517_) instanceof CrystaliserBlockEntity tile) tile.breakBlock(p_60516_,p_60517_);
+        p_60516_.removeBlockEntity(p_60517_);
+    }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
-        return super.getStateForPlacement(p_196258_1_).setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite()).setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false).setValue(WATER, false).setValue(AIR, false).setValue(FIRE, false).setValue(EARTH, false);
+        return super.getStateForPlacement(p_196258_1_).setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite()).setValue(MOLD, false).setValue(RIGHT, false).setValue(LEFT, false);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
         if (RIGHT == null) TechResourcesCrystal.LOGGER.warn("Right property is null !");
         if (LEFT == null) TechResourcesCrystal.LOGGER.warn("Left property is null !");
-        if (WATER == null) TechResourcesCrystal.LOGGER.warn("Water property is null !");
-        if (AIR == null) TechResourcesCrystal.LOGGER.warn("Air property is null !");
-        if (FIRE == null) TechResourcesCrystal.LOGGER.warn("Fire property is null !");
-        if (EARTH == null) TechResourcesCrystal.LOGGER.warn("Earth property is null !");
         if (MOLD == null) TechResourcesCrystal.LOGGER.warn("Mold property is null !");
         if (FACING == null) TechResourcesCrystal.LOGGER.warn("Facing property is null !");
         p_206840_1_.add(FACING);
         p_206840_1_.add(MOLD);
         p_206840_1_.add(RIGHT);
         p_206840_1_.add(LEFT);
-        p_206840_1_.add(WATER);
-        p_206840_1_.add(AIR);
-        p_206840_1_.add(FIRE);
-        p_206840_1_.add(EARTH);
         super.createBlockStateDefinition(p_206840_1_);
     }
 
     @Override
-    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @org.jetbrains.annotations.Nullable Direction direction) {
-        return !state.getValue(WATER) && !state.getValue(AIR) && !state.getValue(FIRE) && !state.getValue(EARTH);
+    public void onPlace(BlockState p_60566_, Level p_60567_, BlockPos p_60568_, BlockState p_60569_, boolean p_60570_) {
+        if (p_60567_.getBlockEntity(p_60568_) instanceof CrystaliserBlockEntity tile) tile.initStands(p_60567_,p_60568_);
     }
 
     private boolean redstoneIsActivated(Level world, BlockPos pos) {

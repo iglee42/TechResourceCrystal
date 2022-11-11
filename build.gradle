@@ -140,7 +140,7 @@ repositories {
         url 'https://techresources.bytesafe.dev/maven/techresources-base/'
         credentials {
             username = 'bytesafe'
-            password = '01G8RH9M66BVQWG4R40S7CTTT3'
+            password = '01GH6W3DDQH6TAKFT9M26XBXC6'
         }
     }
     maven {

@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "minecraft:emerald"
   },
-  "result": "techresourcescrystal:fragmented_emerald",
+  "result": "techresourcescrystal.mobs:fragmented_emerald",
   "count": 9
 }

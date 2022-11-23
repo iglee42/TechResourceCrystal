@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:wolf_hide"
+    "item": "techresourcescrystal.mobs:wolf_hide"
   },
   "result": {
     "item": "minecraft:wolf_spawn_egg"

@@ -1,7 +1,7 @@
 package fr.iglee42.techresourcecrystal.item;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -40,7 +40,7 @@ public class ItemFreezeArrow extends ArrowItem {
 
     @Override
     public void appendHoverText(ItemStack p_41421_, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
-        p_41423_.add(new TextComponent("WIP (Work In Progress)"));
+        p_41423_.add(Component.literal("WIP (Work In Progress)"));
         super.appendHoverText(p_41421_, p_41422_, p_41423_, p_41424_);
     }
 }

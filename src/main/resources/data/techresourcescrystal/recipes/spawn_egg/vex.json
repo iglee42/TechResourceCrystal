@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:vex_wing"
+    "item": "techresourcescrystal.mobs:vex_wing"
   },
   "result": {
     "item": "minecraft:vex_spawn_egg"

@@ -7,6 +7,6 @@
     "item": "minecraft:blue_ice"
   },
   "result": {
-    "item": "techresourcescrystal:freeze_arrow"
+    "item": "techresourcescrystal.mobs:freeze_arrow"
   }
 }

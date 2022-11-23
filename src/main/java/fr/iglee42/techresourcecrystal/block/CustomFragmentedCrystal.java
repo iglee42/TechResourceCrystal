@@ -19,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CustomFragmentedCrystal extends Block {
     private String type = "water";
@@ -31,7 +32,7 @@ public class CustomFragmentedCrystal extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
         List<ItemStack> drops = new ArrayList<>();
-        if (TypesConstants.getType(type).dropFragmented())drops.add(new ItemStack(ModItem.getFragmentedCrystal(type),RANDOM.nextInt(2)+1));
+        if (TypesConstants.getType(type).dropFragmented())drops.add(new ItemStack(ModItem.getFragmentedCrystal(type),new Random().nextInt(2)+1));
         return drops;
     }
 

@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:wither_bone"
+    "item": "techresourcescrystal.mobs:wither_bone"
   },
   "result": {
     "item": "minecraft:wither_skeleton_spawn_egg"

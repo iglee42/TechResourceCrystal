@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:mule_leather"
+    "item": "techresourcescrystal.mobs:mule_leather"
   },
   "result": {
     "item": "minecraft:mule_spawn_egg"

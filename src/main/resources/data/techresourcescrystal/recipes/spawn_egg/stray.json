@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:freeze_arrow"
+    "item": "techresourcescrystal.mobs:freeze_arrow"
   },
   "result": {
     "item": "minecraft:stray_spawn_egg"

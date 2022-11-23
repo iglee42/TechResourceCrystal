@@ -33,7 +33,7 @@ public class ClientEvents {
             SpawnEggItem info = null;
             if (stack.getTag() != null && stack.getTag().contains("type")) {
                 ResourceLocation id = new ResourceLocation(stack.getTag().getString("type"));
-                info = SpawnEggItem.byId(ForgeRegistries.ENTITIES.getValue(id));
+                info = SpawnEggItem.byId(ForgeRegistries.ENTITY_TYPES.getValue(id));
             }
             return info != null ? (tintIndex == 1 ? info.getColor(0) : (tintIndex == 2 ? info.getColor(1) : 0XFFFFFF )): 0XFFFFFF;
     }

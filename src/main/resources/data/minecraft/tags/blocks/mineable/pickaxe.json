@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
+    "techresourcescrystal:fragmented_water_crystal_core",
+    "techresourcescrystal:fragmented_water_crystal",
+    "techresourcescrystal:fragmented_fire_crystal_core",
+    "techresourcescrystal:fragmented_fire_crystal",
+    "techresourcescrystal:fragmented_earth_crystal_core",
+    "techresourcescrystal:fragmented_earth_crystal",
+    "techresourcescrystal:fragmented_air_crystal_core",
+    "techresourcescrystal:fragmented_air_crystal",
     "techresourcescrystal:crystaliser"
   ]
 }

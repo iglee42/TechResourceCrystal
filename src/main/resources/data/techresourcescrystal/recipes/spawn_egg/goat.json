@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:goat_horn"
+    "item": "techresourcescrystal.mobs:goat_horn"
   },
   "result": {
     "item": "minecraft:goat_spawn_egg"

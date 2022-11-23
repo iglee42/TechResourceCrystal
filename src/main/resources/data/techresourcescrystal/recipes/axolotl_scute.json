@@ -7,6 +7,6 @@
     "item": "minecraft:spore_blossom"
   },
   "result": {
-    "item": "techresourcescrystal:axolotl_scute"
+    "item": "techresourcescrystal.mobs:axolotl_scute"
   }
 }

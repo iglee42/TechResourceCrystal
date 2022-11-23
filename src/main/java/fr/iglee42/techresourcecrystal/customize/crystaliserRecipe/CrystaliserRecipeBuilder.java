@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 public class CrystaliserRecipeBuilder implements RecipeBuilder {
    private final Ingredient block;
@@ -88,7 +89,7 @@ public class CrystaliserRecipeBuilder implements RecipeBuilder {
       }
 
       public void serializeRecipeData(JsonObject end) {
-         end.addProperty("block", this.ingredient.getItems()[0].getItem().getRegistryName().toString());
+         end.addProperty("block", Registry.BLOCK.getKey(Block.byItem(this.ingredient.getItems()[0].getItem())).toString());
          if (this.properties != null && this.properties.length > 0){
             JsonObject properties = new JsonObject();
             for (CustomJsonProperty property : this.properties) {

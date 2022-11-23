@@ -1,6 +1,8 @@
 package fr.iglee42.techresourcecrystal.customize;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.SharedConstants;
+import net.minecraft.WorldVersion;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -15,6 +17,6 @@ public class DataGeneratorFactory {
     }
 
     public static DataGenerator createMemoryDataGenerator() {
-        return new DataGenerator(ROOT_PATH, ImmutableList.of());
+        return new DataGenerator(ROOT_PATH, ImmutableList.of(), SharedConstants.getCurrentVersion(),false);
     }
 }

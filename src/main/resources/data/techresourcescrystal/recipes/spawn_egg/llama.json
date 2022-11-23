@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:llama_leather"
+    "item": "techresourcescrystal.mobs:llama_leather"
   },
   "result": {
     "item": "minecraft:llama_spawn_egg"

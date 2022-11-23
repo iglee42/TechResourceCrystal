@@ -5,6 +5,7 @@ import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcesbase.utils.ModsUtils;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -38,18 +39,18 @@ public class CustomsBlockModelsProvider extends BlockModelProvider {
     }
 
     private BlockModelBuilder fragmentedBlock(Block block) {
-        return withExistingParent(block.getRegistryName().getPath(),
+        return withExistingParent(Registry.BLOCK.getKey(block).getPath(),
                 new ResourceLocation("block/cube_all")).texture("all",
-                new ResourceLocation(TechResourcesCrystal.MODID,ModsUtils.split(block.getRegistryName().getPath(),"_")[1]+"/block"));
+                new ResourceLocation(TechResourcesCrystal.MODID,ModsUtils.split(Registry.BLOCK.getKey(block).getPath(),"_")[1]+"/block"));
     }
     private BlockModelBuilder layerCore(Block block,int layer) {
-        return withExistingParent("fragment_"+ModsUtils.split(block.getRegistryName().getPath(),"_")[1] + "_crystal_layer_"+layer,
+        return withExistingParent("fragment_"+ModsUtils.split(Registry.BLOCK.getKey(block).getPath(),"_")[1] + "_crystal_layer_"+layer,
                 new ResourceLocation("block/cube_all")).texture("all",
-                new ResourceLocation(TechResourcesCrystal.MODID,ModsUtils.split(block.getRegistryName().getPath(),"_")[1] + "/core/crystal_"+layer));
+                new ResourceLocation(TechResourcesCrystal.MODID,ModsUtils.split(Registry.BLOCK.getKey(block).getPath(),"_")[1] + "/core/crystal_"+layer));
     }
     private BlockModelBuilder core(Block block) {
-        return withExistingParent(block.getRegistryName().getPath()+ "_core",
+        return withExistingParent(Registry.BLOCK.getKey(block).getPath()+ "_core",
                 new ResourceLocation("block/cube_all")).texture("all",
-                new ResourceLocation(TechResourcesCrystal.MODID, ModsUtils.split(block.getRegistryName().getPath(),"_")[1] + "/core/empty"));
+                new ResourceLocation(TechResourcesCrystal.MODID, ModsUtils.split(Registry.BLOCK.getKey(block).getPath(),"_")[1] + "/core/empty"));
     }
 }

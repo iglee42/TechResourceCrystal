@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:bat_wing"
+    "item": "techresourcescrystal.mobs:bat_wing"
   },
   "result": {
     "item": "minecraft:bat_spawn_egg"

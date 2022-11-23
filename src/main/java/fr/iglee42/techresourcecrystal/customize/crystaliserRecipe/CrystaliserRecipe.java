@@ -83,7 +83,7 @@ public class CrystaliserRecipe implements Recipe<SimpleContainer> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "crystaliser";
     }
-    public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrystaliserRecipe> {
+    public static class Serializer implements RecipeSerializer<CrystaliserRecipe> {
         public CrystaliserRecipe fromJson(ResourceLocation rs, JsonObject json) {
             Ingredient ingredient = Ingredient.of(JsonHelper.getBlock(json,"block").asItem());
             HashMap<String,JsonPrimitive> requiredProperties = new HashMap<>();

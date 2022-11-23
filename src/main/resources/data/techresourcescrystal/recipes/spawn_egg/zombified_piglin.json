@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:nether_flesh"
+    "item": "techresourcescrystal.mobs:nether_flesh"
   },
   "result": {
     "item": "minecraft:zombified_piglin_spawn_egg"

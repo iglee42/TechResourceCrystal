@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:polar_bear_fur"
+    "item": "techresourcescrystal.mobs:polar_bear_fur"
   },
   "result": {
     "item": "minecraft:polar_bear_spawn_egg"

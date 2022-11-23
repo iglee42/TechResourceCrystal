@@ -24,10 +24,10 @@ public class CustomsTagsProvider {
 
         @Override
         public void addTags() {
-            TypesConstants.TYPES.forEach(c->{
-                this.tag(ModTags.Items.CRYSTALS).add(ModItem.getCrystal(c.name()));
-                this.tag(ModTags.Items.FRAGMENTED_CRYSTALS).add(ModItem.getFragmentedCrystal(c.name()));
-                this.tag(ModTags.Items.PLATES).add(ModItem.getPlate(c.name()));
+            TypesConstants.TYPES.stream().filter(c->!c.isInModBase()).forEach(c->{
+                this.tag(ModTags.Items.CRYSTALS).add(ModItem.getCrystal(c.name())).replace(false);
+                this.tag(ModTags.Items.FRAGMENTED_CRYSTALS).add(ModItem.getFragmentedCrystal(c.name())).replace(false);
+                this.tag(ModTags.Items.PLATES).add(ModItem.getPlate(c.name())).replace(false);
             });
         }
     }
@@ -38,8 +38,8 @@ public class CustomsTagsProvider {
 
         @Override
         public void addTags() {
-            TypesConstants.TYPES.forEach(c->{
-                this.tag(ModTags.Blocks.MINEABLE_PICKAXE).add(ModBlock.getCrystalCore(c.name())).add(ModBlock.getFragmentedCrystal(c.name()));
+            TypesConstants.TYPES.stream().filter(c->!c.isInModBase()).forEach(c->{
+                this.tag(ModTags.Blocks.MINEABLE_PICKAXE).add(ModBlock.getCrystalCore(c.name())).add(ModBlock.getFragmentedCrystal(c.name())).replace(false);
             });
         }
     }

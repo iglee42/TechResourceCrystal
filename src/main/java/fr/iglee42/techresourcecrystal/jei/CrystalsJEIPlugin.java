@@ -12,8 +12,8 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -53,13 +53,13 @@ public class CrystalsJEIPlugin implements IModPlugin {
                         .collect(Collectors.toList()));
 
 
-        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,new TextComponent("\nWhen you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystalization.\nThe crystalization take 30 seconds."));
+        registration.addIngredientInfo(new ItemStack(ModBlock.CRYSTALISER.get()),VanillaTypes.ITEM_STACK,Component.literal("\nWhen you fill the crystaliser with lava & mold you can send a redstone signal to launch the crystalization.\nThe crystalization take 30 seconds."));
         List<ItemStack> cores = new ArrayList<>();
         TypesConstants.TYPES.forEach(c->{
             cores.add(new ItemStack(ModBlock.getCrystalCore(c.name())));
-            registration.addIngredientInfo(new ItemStack(ModBlock.getFragmentedCrystal(c.name())),VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on a "+new TranslatableComponent(c.entity().getDescriptionId()).getString() +" with amethyst block. The mob has a 30 seconds cooldown"));
+            registration.addIngredientInfo(new ItemStack(ModBlock.getFragmentedCrystal(c.name())),VanillaTypes.ITEM_STACK,Component.literal("Obtain when right click on a "+Component.translatable(c.entity().getDescriptionId()).getString() +" with amethyst block. The mob has a 30 seconds cooldown"));
         });
-        registration.addIngredientInfo(cores,VanillaTypes.ITEM_STACK,new TextComponent("Obtain when right click on the fragmented crystal of the same type with a lava shard"),new TextComponent("\n\nTo fill it you need to right click on with the fragmented crystal (item) of the same type."));
+        registration.addIngredientInfo(cores,VanillaTypes.ITEM_STACK,Component.literal("Obtain when right click on the fragmented crystal of the same type with a lava shard"),Component.literal("\n\nTo fill it you need to right click on with the fragmented crystal (item) of the same type."));
         //List<ItemStack> hides = new ArrayList<>();
         //registration.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, new ArrayList<>(hides));
     }

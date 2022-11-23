@@ -4,7 +4,7 @@ import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -36,16 +36,16 @@ public class CustomizeEvents {
 
         @SubscribeEvent
         public static void mobInteractEvent(PlayerInteractEvent.EntityInteractSpecific event){
-            if (event.getPlayer().getMainHandItem().getItem() == Items.AIR) return;
+            if (event.getEntity().getMainHandItem().getItem() == Items.AIR) return;
             for (Crystal c : TypesConstants.TYPES){
-                if (event.getPlayer().getMainHandItem().getItem() != c.mobItem()) continue;
+                if (event.getEntity().getMainHandItem().getItem() != c.mobItem()) continue;
                 if (event.getTarget().getType() != c.entity()) continue;
                 Timer timer = new Timer();
                     if (event.getTarget().getTags().contains("inCooldown")) {
-                        event.getPlayer().displayClientMessage(new TextComponent("§cThis mob is in cooldown"), true);
+                        event.getEntity().displayClientMessage(Component.literal("§cThis mob is in cooldown"), true);
                         return;
                     }
-                    event.getPlayer().getMainHandItem().setCount(event.getPlayer().getMainHandItem().getCount() - 1);
+                    event.getEntity().getMainHandItem().setCount(event.getEntity().getMainHandItem().getCount() - 1);
                     Block.popResource(event.getTarget().getLevel(), event.getTarget().getOnPos().offset(0, 1, 0), new ItemStack(ModBlock.getFragmentedCrystal(c.name())));
                     event.getTarget().addTag("inCooldown");
                     timer.schedule(new TimerTask() {

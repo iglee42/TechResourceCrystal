@@ -5,6 +5,7 @@ import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcesbase.utils.ModsUtils;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -36,8 +37,8 @@ public class CustomsItemModelsProvider extends ItemModelProvider {
     }
 
     private ItemModelBuilder fromBlock(Block block){
-        return withExistingParent(block.getRegistryName().getPath(),
-                new ResourceLocation(TechResourcesCrystal.MODID,"block/" + block.getRegistryName().getPath()));
+        return withExistingParent(Registry.BLOCK.getKey(block).getPath(),
+                new ResourceLocation(TechResourcesCrystal.MODID,"block/" + Registry.BLOCK.getKey(block).getPath()));
     }
 
     private ItemModelBuilder fragmentedCrystal(String name){

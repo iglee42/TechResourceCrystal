@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntity {
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, TechResourcesCrystal.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TechResourcesCrystal.MODID);
 
     public static final RegistryObject<BlockEntityType<CrystaliserBlockEntity>> CRYSTALISER = BLOCK_ENTITIES.register("crystaliser",() -> BlockEntityType.Builder.of(CrystaliserBlockEntity::new,ModBlock.CRYSTALISER.get()).build(null));
 

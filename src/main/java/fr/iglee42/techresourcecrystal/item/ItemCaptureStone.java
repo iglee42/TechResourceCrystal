@@ -2,9 +2,10 @@ package fr.iglee42.techresourcecrystal.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +32,7 @@ public class ItemCaptureStone extends Item {
 
     @Override
     public Component getName(ItemStack p_41458_) {
-        return containsEntity(p_41458_) ? new TranslatableComponent(getDescriptionId()).append(" (").append(new TranslatableComponent(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(p_41458_.getTag().getString("type"))).getDescriptionId())).append(")") : new TranslatableComponent(getDescriptionId());
+        return containsEntity(p_41458_) ? Component.translatable(getDescriptionId()).append(" (").append(Component.translatable(ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(p_41458_.getTag().getString("type"))).getDescriptionId())).append(")") : Component.translatable(getDescriptionId());
     }
 
 
@@ -56,7 +57,7 @@ public class ItemCaptureStone extends Item {
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity target, InteractionHand hand) {
         CompoundTag tag = itemStack.getOrCreateTag();
         if (!tag.contains("type")){
-            tag.putString("type",target.getType().getRegistryName().toString());
+            tag.putString("type", Registry.ENTITY_TYPE.getKey(target.getType()).toString());
             tag.put("mob",target.serializeNBT());
             itemStack.setTag(tag);
             target.remove(Entity.RemovalReason.KILLED);

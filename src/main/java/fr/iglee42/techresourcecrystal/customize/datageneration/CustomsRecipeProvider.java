@@ -31,11 +31,12 @@ public class CustomsRecipeProvider extends RecipeProvider implements IConditionB
     @Override
     public void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
        for (Crystal type : TypesConstants.TYPES) {
+           if (type.isInModBase()) continue;
            if (type.hasCrystaliserRecipe()){
                new CrystaliserRecipeBuilder(Ingredient.of(ModBlock.getCrystalCore(type.name())),ModItem.getCrystal(type.name()),1,new CustomJsonProperty("crystal",new JsonPrimitive(3)))
                        .save(consumer);
            }
-           if (type.isInModBase()) continue;
+
            if (type.hasPlateRecipe()) {
                SingleItemRecipeBuilder.stonecutting(
                        Ingredient.of(ModItem.getCrystal(type.name())),

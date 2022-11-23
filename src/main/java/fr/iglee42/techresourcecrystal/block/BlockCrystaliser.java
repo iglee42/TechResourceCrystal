@@ -5,7 +5,7 @@ import fr.iglee42.techresourcecrystal.block.entity.CrystaliserBlockEntity;
 import fr.iglee42.techresourcecrystal.init.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -100,7 +100,7 @@ public class BlockCrystaliser extends BaseEntityBlock {
                             return InteractionResult.CONSUME;
                         }
                     } else {
-                        player.displayClientMessage(new TextComponent("§cYou can't remove lava the machine is in functionning !"), true);
+                        player.displayClientMessage(Component.literal("§cYou can't remove lava the machine is in functionning !"), true);
                     }
                 }
             } else {
@@ -113,7 +113,7 @@ public class BlockCrystaliser extends BaseEntityBlock {
                             return InteractionResult.CONSUME;
                         }
                     } else {
-                        player.displayClientMessage(new TextComponent("§cYou can't remove mold the machine is in functionning !"), true);
+                        player.displayClientMessage(Component.literal("§cYou can't remove mold the machine is in functionning !"), true);
                     }
                 }
             }

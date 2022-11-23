@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:drowned_flesh"
+    "item": "techresourcescrystal.mobs:drowned_flesh"
   },
   "result": {
     "item": "minecraft:drowned_spawn_egg"

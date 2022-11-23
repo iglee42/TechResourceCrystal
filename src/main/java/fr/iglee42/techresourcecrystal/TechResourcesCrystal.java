@@ -2,6 +2,7 @@ package fr.iglee42.techresourcecrystal;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
 import fr.iglee42.techresourcecrystal.customize.DataGeneratorFactory;
@@ -14,13 +15,16 @@ import fr.iglee42.techresourcecrystal.jei.CrystalsJEIPlugin;
 import fr.iglee42.techresourcecrystal.theoneprobe.TOPIMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -38,7 +42,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TechResourcesCrystal.MODID)
@@ -52,27 +57,37 @@ public class TechResourcesCrystal {
             return new ItemStack(ModItem.UNIFIED_CRYSTAL.get());
         }
     };
+    public static final CreativeModeTab MOBS_GROUP = new CreativeModeTab(MODID + ".mobs_group") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(ModItem.AXOLOTL_SCUTE.get());
+        }
+    };
     private DataGenerator generator;
     private static boolean hasGenerated;
     private static TechResourcesCrystal instance;
     public static boolean isTOPLoaded;
     public TechResourcesCrystal() {
         instance = this;
-        TypesConstants.init();
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItem.ITEMS.register(bus);
+        ModItem.MOBS_ITEMS.register(bus);
         ModBlock.BLOCKS.register(bus);
         ModBlockEntity.BLOCK_ENTITIES.register(bus);
         ModSounds.REGISTER.register(bus);
         ModEntityType.ENTITY_TYPES.register(bus);
         CustomRecipes.SERIALIZER.register(bus);
         DataGeneratorFactory.init();
+        TypesConstants.init();
+
         prepareData();
 
         transferTextures();
 
 
         MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
+        MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(this::onServerStopping);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -141,32 +156,50 @@ public class TechResourcesCrystal {
             }
         }
     }
-    private void setup(final FMLCommonSetupEvent event) {
-    }
+
 
     private void prepareData(){
         generator = DataGeneratorFactory.createMemoryDataGenerator();
         ExistingFileHelper existingFileHelper = new ExistingFileHelper(ImmutableList.of(),ImmutableSet.of(),false,null,null);
 
-        generator.addProvider(new CustomsRecipeProvider(generator));
-        generator.addProvider(new CustomsTagsProvider.Items(generator,new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper),MODID,existingFileHelper));
-        generator.addProvider(new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper));
+        generator.addProvider(true,new CustomsRecipeProvider(generator));
+        generator.addProvider(true,new CustomsTagsProvider.Items(generator,new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper),MODID,existingFileHelper));
+        generator.addProvider(true,new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper));
         if (FMLEnvironment.dist != Dist.DEDICATED_SERVER){
-            generator.addProvider(new CustomsBlockModelsProvider(generator,existingFileHelper));
-            generator.addProvider(new CustomsItemModelsProvider(generator,existingFileHelper));
-            generator.addProvider(new CustomsBlockStatesProvider(generator,existingFileHelper));
-            generator.addProvider(new CustomsLanguagesProvider(generator,existingFileHelper));
+            generator.addProvider(true,new CustomsBlockModelsProvider(generator,existingFileHelper));
+            generator.addProvider(true,new CustomsItemModelsProvider(generator,existingFileHelper));
+            generator.addProvider(true,new CustomsBlockStatesProvider(generator,existingFileHelper));
+            generator.addProvider(true,new CustomsLanguagesProvider(generator,existingFileHelper));
 
         }
 
 
     }
 
+    public void onServerStarted(final ServerStartedEvent event) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                PackRepository repo = event.getServer().getPackRepository();
+                List<Pack> packs = Lists.newArrayList(repo.getSelectedPacks());
+                event.getServer().reloadResources(packs.stream().map(Pack::getId).collect(Collectors.toList()));
+                this.cancel();
+            }
+        },5000L);
+    }
     public void onServerStart(final ServerAboutToStartEvent event) {
         event.getServer().getPackRepository().addPackFinder(new TRCPackFinder(PackType.DATA));
-        event.getServer().reloadResources(event.getServer().getWorldData().getDataPackConfig().getEnabled());
+
     }
 
+    public void onServerStopping(final ServerStoppingEvent event){
+        event.getServer().getAllLevels().forEach(lvl->{
+            List<Entity> entities = new ArrayList<>();
+            lvl.getEntities().getAll().forEach(e -> entities.add(e));
+            entities.stream().filter(e->e.getTags().contains("crystaliserArmorStand")).forEach(e->e.remove(Entity.RemovalReason.KILLED));
+        });
+    }
 
     public static void generateData() {
         if (!hasGenerated) {

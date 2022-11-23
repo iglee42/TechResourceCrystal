@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:zombified_porkchop"
+    "item": "techresourcescrystal.mobs:zombified_porkchop"
   },
   "result": {
     "item": "minecraft:zoglin_spawn_egg"

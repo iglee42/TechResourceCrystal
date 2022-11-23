@@ -4,7 +4,7 @@
     "item": "techresourcescrystal:crystalised_spawn_egg"
   },
   "addition": {
-    "item": "techresourcescrystal:dolphin_hide"
+    "item": "techresourcescrystal.mobs:dolphin_hide"
   },
   "result": {
     "item": "minecraft:dolphin_spawn_egg"

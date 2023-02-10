@@ -40,7 +40,7 @@ public class CustomFragmentedCrystal extends Block {
     public InteractionResult use(BlockState p_60503_, Level p_60504_, BlockPos p_60505_, Player p_60506_, InteractionHand p_60507_, BlockHitResult p_60508_) {
         if (TypesConstants.getType(type).hasCoreRecipe()){
             if (p_60506_.getMainHandItem().getItem() != Items.AIR){
-                if (p_60506_.getMainHandItem().getItem() == fr.iglee42.techresourcesbase.init.ModItem.LAVA_SHARD.get()) {
+                if (p_60506_.getMainHandItem().getItem() == fr.iglee42.igleelib.common.init.ModItem.LAVA_SHARD.get()) {
                     p_60504_.setBlockAndUpdate(p_60505_, ModBlock.getCrystalCore(type).defaultBlockState());
                     if (!p_60506_.isCreative())p_60506_.getMainHandItem().setCount(p_60506_.getMainHandItem().getCount() -1);
                     return InteractionResult.CONSUME;

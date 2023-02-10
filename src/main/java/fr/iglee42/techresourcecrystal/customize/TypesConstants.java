@@ -2,11 +2,10 @@ package fr.iglee42.techresourcecrystal.customize;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.iglee42.igleelib.api.utils.JsonHelper;
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
-import fr.iglee42.techresourcesbase.utils.JsonHelper;
-import fr.iglee42.techresourcesbase.utils.ModsUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -23,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TypesConstants {

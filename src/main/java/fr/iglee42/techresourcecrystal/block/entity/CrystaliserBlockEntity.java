@@ -99,7 +99,7 @@ public class CrystaliserBlockEntity extends BlockEntity {
     }
     public void breakBlock(Level level, BlockPos pos){
         this.deleteStands();
-        if (this.start)this.level.setBlockAndUpdate(pos.offset(0,-1,0),this.stockedBlock);
+        if (this.start && this.stockedBlock != null)this.level.setBlockAndUpdate(pos.offset(0,-1,0),this.stockedBlock);
     }
 
     private void second(Level pLevel, BlockPos pPos, BlockState pState) {
@@ -122,10 +122,10 @@ public class CrystaliserBlockEntity extends BlockEntity {
                 crystalSecond = 0;
                 BlockState emptyState = pState;
                 emptyState = emptyState.setValue(BlockCrystaliser.LEFT, false).setValue(BlockCrystaliser.RIGHT, false).setValue(BlockCrystaliser.MOLD, true);
+                this.stockedBlock = null;
                 pLevel.setBlockAndUpdate(pPos, emptyState);
                 Block.popResource(pLevel, pPos.offset(0, 1, 0), recipe.getResultItem());
                 //c.setItem(0,new ItemStack(Blocks.AIR));
-                this.stockedBlock = null;
             }
         } else {
             timeStand.setCustomNameVisible(false);
@@ -274,9 +274,9 @@ public class CrystaliserBlockEntity extends BlockEntity {
         this.crystalSecond = tag.getInt("crystalSecond");
         this.startSecond = tag.getInt("startSecond");
         this.missingStand = EntityType.ARMOR_STAND.create(this.lastLevel);
-        this.missingStand.load((CompoundTag) tag.get("missingStand"));
+        if (level != null) this.missingStand.load((CompoundTag) tag.get("missingStand"));
         this.timeStand = EntityType.ARMOR_STAND.create(this.lastLevel);
-        this.timeStand.load((CompoundTag) tag.get("timeStand"));
+        if (level != null) this.timeStand.load((CompoundTag) tag.get("timeStand"));
         this.level.addFreshEntity(this.missingStand);
         this.level.addFreshEntity(this.timeStand);
         try {

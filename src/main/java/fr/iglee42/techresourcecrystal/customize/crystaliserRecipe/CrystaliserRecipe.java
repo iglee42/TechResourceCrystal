@@ -2,9 +2,8 @@ package fr.iglee42.techresourcecrystal.customize.crystaliserRecipe;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import fr.iglee42.igleelib.api.utils.JsonHelper;
 import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
-import fr.iglee42.techresourcesbase.utils.JsonHelper;
-import it.unimi.dsi.fastutil.Hash;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,12 +12,10 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class CrystaliserRecipe implements Recipe<SimpleContainer> {
 
@@ -83,7 +80,7 @@ public class CrystaliserRecipe implements Recipe<SimpleContainer> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "crystaliser";
     }
-    public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrystaliserRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrystaliserRecipe> {
         public CrystaliserRecipe fromJson(ResourceLocation rs, JsonObject json) {
             Ingredient ingredient = Ingredient.of(JsonHelper.getBlock(json,"block").asItem());
             HashMap<String,JsonPrimitive> requiredProperties = new HashMap<>();

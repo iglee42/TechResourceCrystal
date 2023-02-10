@@ -15,7 +15,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 
 group = 'fr.iglee42'
-version = '1.18.2-1.5'
+version = '1.18.2-1.5.1'
 
 java {
     archivesBaseName = 'TechResourcesCrystal'
@@ -137,7 +137,7 @@ repositories {
     }
     maven {
         name = 'bytesafe'
-        url 'https://techresources.bytesafe.dev/maven/techresources-base/'
+        url 'https://techresources.bytesafe.dev/maven/library/'
         credentials {
             username = 'bytesafe'
             password = '01GH6W3DDQH6TAKFT9M26XBXC6'
@@ -152,13 +152,13 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.44'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-    implementation fg.deobf("fr.iglee42.techresourcesbase:TechResourcesBase:${mc_version}-${lib_version}") { changing = true }
+    implementation fg.deobf("fr.iglee42.igleelib:IgleeLib:${mc_version}-${lib_version}") { changing = true }
 
     implementation fg.deobf("curse.maven:the-one-probe-245211:${top_file}") { transitive = false }
 

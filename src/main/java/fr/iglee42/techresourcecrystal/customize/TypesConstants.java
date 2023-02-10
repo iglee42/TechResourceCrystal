@@ -2,11 +2,10 @@ package fr.iglee42.techresourcecrystal.customize;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.iglee42.igleelib.api.utils.JsonHelper;
 import fr.iglee42.techresourcecrystal.TechResourcesCrystal;
 import fr.iglee42.techresourcecrystal.init.ModBlock;
 import fr.iglee42.techresourcecrystal.init.ModItem;
-import fr.iglee42.techresourcesbase.utils.JsonHelper;
-import fr.iglee42.techresourcesbase.utils.ModsUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -20,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TypesConstants {
@@ -68,7 +66,7 @@ public class TypesConstants {
                     reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
                     json = parser.parse(reader).getAsJsonObject();
                     if (json.get("name").getAsString().isEmpty()) throw new NullPointerException("The name can't be empty ! (" + file.getName() + ")" );
-                    TYPES.add(new Crystal(json.get("name").getAsString(),JsonHelper.getEntityTypeOrDefault(json,"entity",EntityType.PIG), JsonHelper.getItemOrDefault(json,"mobItem", Blocks.AMETHYST_BLOCK.asItem()), JsonHelper.getBooleanOrDefault(json,"hasPlateRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasCrystaliserRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasMobRecipe",true),JsonHelper.getBooleanOrDefault(json,"dropFragmented",true),JsonHelper.getBooleanOrDefault(json,"hasCoreRecipe",true),false));
+                    TYPES.add(new Crystal(json.get("name").getAsString(), JsonHelper.getEntityTypeOrDefault(json,"entity",EntityType.PIG), JsonHelper.getItemOrDefault(json,"mobItem", Blocks.AMETHYST_BLOCK.asItem()), JsonHelper.getBooleanOrDefault(json,"hasPlateRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasCrystaliserRecipe",true),JsonHelper.getBooleanOrDefault(json,"hasMobRecipe",true),JsonHelper.getBooleanOrDefault(json,"dropFragmented",true),JsonHelper.getBooleanOrDefault(json,"hasCoreRecipe",true),false));
                     reader.close();
                 } catch (Exception e) {
                     TechResourcesCrystal.LOGGER.error("An error occurred while loading minerals", e);

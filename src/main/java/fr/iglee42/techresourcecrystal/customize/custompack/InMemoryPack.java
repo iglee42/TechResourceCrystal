@@ -48,7 +48,6 @@ public class InMemoryPack implements PackResources {
     }
 
 
-
     @Override
     public Collection<ResourceLocation> getResources(PackType type, String namespaceIn, String pathIn,  Predicate<ResourceLocation> filterIn) {
         List<ResourceLocation> result = new ArrayList<>();

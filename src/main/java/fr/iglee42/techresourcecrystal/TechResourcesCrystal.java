@@ -1,18 +1,17 @@
 package fr.iglee42.techresourcecrystal;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import fr.iglee42.techresourcecrystal.customize.Crystal;
 import fr.iglee42.techresourcecrystal.customize.CustomRecipes;
-import fr.iglee42.techresourcecrystal.customize.DataGeneratorFactory;
 import fr.iglee42.techresourcecrystal.customize.TypesConstants;
 import fr.iglee42.techresourcecrystal.customize.custompack.PackType;
+import fr.iglee42.techresourcecrystal.customize.custompack.PathConstant;
 import fr.iglee42.techresourcecrystal.customize.custompack.TRCPackFinder;
-import fr.iglee42.techresourcecrystal.customize.datageneration.*;
+import fr.iglee42.techresourcecrystal.customize.generation.BlockStatesGenerator;
+import fr.iglee42.techresourcecrystal.customize.generation.LangsGenerator;
+import fr.iglee42.techresourcecrystal.customize.generation.ModelsGenerator;
+import fr.iglee42.techresourcecrystal.customize.generation.RecipesGenerator;
 import fr.iglee42.techresourcecrystal.init.*;
-import fr.iglee42.techresourcecrystal.jei.CrystalsJEIPlugin;
-import fr.iglee42.techresourcecrystal.theoneprobe.TOPIMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.server.packs.repository.Pack;
@@ -22,18 +21,13 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -42,7 +36,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -63,12 +60,12 @@ public class TechResourcesCrystal {
             return new ItemStack(ModItem.AXOLOTL_SCUTE.get());
         }
     };
-    private DataGenerator generator;
     private static boolean hasGenerated;
     private static TechResourcesCrystal instance;
     public static boolean isTOPLoaded;
     public TechResourcesCrystal() {
         instance = this;
+        PathConstant.init();
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItem.ITEMS.register(bus);
         ModItem.MOBS_ITEMS.register(bus);
@@ -77,10 +74,8 @@ public class TechResourcesCrystal {
         ModSounds.REGISTER.register(bus);
         ModEntityType.ENTITY_TYPES.register(bus);
         CustomRecipes.SERIALIZER.register(bus);
-        DataGeneratorFactory.init();
         TypesConstants.init();
 
-        prepareData();
 
         transferTextures();
 
@@ -127,7 +122,22 @@ public class TechResourcesCrystal {
 
     }
 
+    public static void deleteDirectory(Path sourceDirectory) throws IOException {
+        if (!sourceDirectory.toFile().exists()) return;
 
+        for (String f : sourceDirectory.toFile().list()) {
+            deleteDirectoryCompatibilityMode(new File(sourceDirectory.toFile(), f).toPath());
+        }
+        sourceDirectory.toFile().delete();
+    }
+
+    public static void deleteDirectoryCompatibilityMode(Path source) throws IOException {
+        if (source.toFile().isDirectory()) {
+            deleteDirectory(source);
+        } else {
+            source.toFile().delete();
+        }
+    }
     private static void copyDirectory(File sourceDirectory, File destinationDirectory) throws IOException {
         if (!destinationDirectory.exists()) {
             destinationDirectory.mkdir();
@@ -158,23 +168,6 @@ public class TechResourcesCrystal {
     }
 
 
-    private void prepareData(){
-        generator = DataGeneratorFactory.createMemoryDataGenerator();
-        ExistingFileHelper existingFileHelper = new ExistingFileHelper(ImmutableList.of(),ImmutableSet.of(),false,null,null);
-
-        generator.addProvider(true,new CustomsRecipeProvider(generator));
-        generator.addProvider(true,new CustomsTagsProvider.Items(generator,new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper),MODID,existingFileHelper));
-        generator.addProvider(true,new CustomsTagsProvider.Blocks(generator,MODID,existingFileHelper));
-        if (FMLEnvironment.dist != Dist.DEDICATED_SERVER){
-            generator.addProvider(true,new CustomsBlockModelsProvider(generator,existingFileHelper));
-            generator.addProvider(true,new CustomsItemModelsProvider(generator,existingFileHelper));
-            generator.addProvider(true,new CustomsBlockStatesProvider(generator,existingFileHelper));
-            generator.addProvider(true,new CustomsLanguagesProvider(generator,existingFileHelper));
-
-        }
-
-
-    }
 
     public void onServerStarted(final ServerStartedEvent event) {
         Timer timer = new Timer();
@@ -203,14 +196,13 @@ public class TechResourcesCrystal {
 
     public static void generateData() {
         if (!hasGenerated) {
-            try {
-                if (!ModLoader.isLoadingStateValid()){
-                    return;
-                }
-                instance.generator.run();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!ModLoader.isLoadingStateValid()){
+                return;
             }
+            ModelsGenerator.generate();
+            BlockStatesGenerator.generate();
+            LangsGenerator.generate();
+            RecipesGenerator.generate();
             hasGenerated = true;
         }
     }

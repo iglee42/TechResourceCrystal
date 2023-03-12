@@ -1,0 +1,10 @@
+{
+  "type": "techresourcescrystal:crystaliser",
+  "block": "techresourcescrystal:fragmented_air_crystal_core",
+  "properties": {
+    "crystal": 3
+  },
+  "result": {
+    "item": "techresourcescrystal:air_crystal"
+  }
+}
